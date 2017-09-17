@@ -11,6 +11,7 @@ import { SignupComponent } from './Components/signup/signup.component';
 
 // import Services
 import { AuthService } from './Services/auth.service';
+import { ErrorService } from './Services/error.service';
 import { UsersService } from './Services/users.service';
 
 // import routing
@@ -32,6 +33,7 @@ import { routing } from 'app/app.routes';
   ],
   providers: [
     AuthService,
+    ErrorService,
     UsersService
   ],
   bootstrap: [AppComponent]

@@ -13,62 +13,6 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 
 /***/ }),
 
-/***/ "../../../../../src/app/Models/error.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Error; });
-var Error = (function () {
-    function Error(title, message) {
-        this.title = title;
-        this.message = message;
-    }
-    return Error;
-}());
-
-//# sourceMappingURL=error.model.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/Models/user.model.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
-var User = (function () {
-    function User(email, password, userName) {
-        this.email = email;
-        this.password = password;
-        this.userName = userName;
-    }
-    return User;
-}());
-
-//# sourceMappingURL=user.model.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/Shared/equal-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = validateEqualValidator;
-function validateEqualValidator(control) {
-    var password = control.parent && control.parent.controls ? control.parent.controls['password'].value : null;
-    var confirmed_password = control.parent && control.parent.controls ? control.parent.controls['confirm_password'].value : null;
-    if (confirmed_password !== password && confirmed_password !== null && password !== null) {
-        return {
-            'password_not_match': {
-                value: 'Password not match.'
-            }
-        };
-    }
-    return null;
-}
-//# sourceMappingURL=equal-validator.directive.js.map
-
-/***/ }),
-
 /***/ "../../../../../src/app/app.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -418,8 +362,9 @@ module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-p
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_app_Models_user_model__ = __webpack_require__("../../../../../src/app/Models/user.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_Shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/Shared/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_app_models_user_model__ = __webpack_require__("../../../../../src/app/models/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_services_users_service__ = __webpack_require__("../../../../../src/app/services/users.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/shared/equal-validator.directive.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -434,8 +379,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SignupComponent = (function () {
-    function SignupComponent() {
+    function SignupComponent(usersService) {
+        this.usersService = usersService;
     }
     SignupComponent.prototype.ngOnInit = function () {
         this.signupForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormGroup */]({
@@ -446,11 +393,11 @@ var SignupComponent = (function () {
             ]),
             password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
                 __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_3_app_Shared_equal_validator_directive__["a" /* validateEqualValidator */]
+                __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */]
             ]),
             confirm_password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
                 __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_3_app_Shared_equal_validator_directive__["a" /* validateEqualValidator */]
+                __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */]
             ])
         });
     };
@@ -483,8 +430,8 @@ var SignupComponent = (function () {
         configurable: true
     });
     SignupComponent.prototype.onSubmit = function () {
-        var userInfo = new __WEBPACK_IMPORTED_MODULE_2_app_Models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
-        console.log(userInfo);
+        var userInfo = new __WEBPACK_IMPORTED_MODULE_2_app_models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
+        this.usersService.signupUser(userInfo);
     };
     SignupComponent.prototype.onChange = function (event) {
         var field = event.target.name;
@@ -497,10 +444,29 @@ SignupComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/signup/signup.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/signup/signup.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_users_service__["a" /* UsersService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_users_service__["a" /* UsersService */]) === "function" && _a || Object])
 ], SignupComponent);
 
+var _a;
 //# sourceMappingURL=signup.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/models/user.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
+var User = (function () {
+    function User(email, password, username) {
+        this.email = email;
+        this.password = password;
+        this.username = username;
+    }
+    return User;
+}());
+
+//# sourceMappingURL=user.model.js.map
 
 /***/ }),
 
@@ -571,7 +537,6 @@ AuthService = __decorate([
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Models_error_model__ = __webpack_require__("../../../../../src/app/Models/error.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ErrorService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -583,14 +548,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var ErrorService = (function () {
     function ErrorService() {
         this.errorOccurred = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */]();
     }
     ErrorService.prototype.handleError = function (error) {
-        var errorData = new __WEBPACK_IMPORTED_MODULE_1__Models_error_model__["a" /* Error */](error.title, error.error.message);
-        this.errorOccurred.emit(errorData);
+        console.log(error);
+        // const errorData = new Error(error.title, error.error.message);
+        // this.errorOccurred.emit(errorData);
     };
     return ErrorService;
 }());
@@ -634,9 +599,13 @@ var UsersService = (function () {
     UsersService.prototype.signupUser = function (user) {
         var _this = this;
         var body = JSON.stringify(user);
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
+        console.log(body);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers });
-        return this.http.post('api/v1/users', body, options)
+        return this.http.post('api/v1/user/signup', body, options)
             .map(function (response) { return response.json(); })
             .catch(function (error) {
             _this.errorService.handleError(error.json());
@@ -652,6 +621,27 @@ UsersService = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=users.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/shared/equal-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = validateEqualValidator;
+function validateEqualValidator(control) {
+    var password = control.parent && control.parent.controls ? control.parent.controls['password'].value : null;
+    var confirmed_password = control.parent && control.parent.controls ? control.parent.controls['confirm_password'].value : null;
+    if (confirmed_password !== password && confirmed_password !== null && password !== null) {
+        return {
+            'password_not_match': {
+                value: 'Password not match.'
+            }
+        };
+    }
+    return null;
+}
+//# sourceMappingURL=equal-validator.directive.js.map
 
 /***/ }),
 

@@ -1,0 +1,4 @@
+{
+    "mongoDbUri": "mongodb://diwang_hichat_capstone:88888888@ds141454.mlab.com:41454/hichat-capstone",
+    "jwtSecret": "random string!!"
+}

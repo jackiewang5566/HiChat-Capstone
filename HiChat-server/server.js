@@ -1,18 +1,23 @@
+const app = require('express')();
 const express = require('express');
-const app = express();
+const config = require('./config/config.json');
 const mongoose = require('mongoose');
 const path = require('path');
 
 const indexRouter = require('./routes/index');
-// const restRouter = require('./routes/rest');
+const restRouter = require('./routes/rest');
 
-// const db_username = 'diwang_COJDB';
+// const db_username = 'diwang_hichat_capstone';
 // const db_password = '88888888';
-// mongoose.connect(`mongodb://${db_username}:${db_password}@ds129031.mlab.com:29031/coj`);
+// mongoose.connect(`mongodb://${db_username}:${db_password}@ds141454.mlab.com:41454/hichat-capstone`);
+
+// connect mongodb
+require('./models/main').connect(config.mongoDbUri);
+
 
 app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', indexRouter);
-// app.use('/api/v1', restRouter);
+app.use('/api/v1', restRouter);
 
 app.use(function (req, res) {
   res.sendFile('index.html', { root: path.join(__dirname, '../public') });

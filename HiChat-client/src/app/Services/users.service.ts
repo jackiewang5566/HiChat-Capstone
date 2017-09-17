@@ -13,9 +13,13 @@ export class UsersService {
 
   signupUser(user: User) {
     const body = JSON.stringify(user);
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+    console.log(body);
+    const headers = new Headers({ 
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
     const options = new RequestOptions({ headers: headers });
-    return this.http.post('api/v1/users', body, options)
+    return this.http.post('api/v1/user/signup', body, options)
                     .map((response: Response) => response.json())
                     .catch((error: Response) => {
                       this.errorService.handleError(error.json());

@@ -7,3 +7,8 @@
     padding-left: 20px;
     color: red;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}

@@ -49,11 +49,12 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    // const user = new User(
-    //   this.signupForm.value.username,
-    //   this.signupForm.value.email,
-    //   this.signupForm.value.password
-    // );
+    const userInfo = new User(
+      this.signupForm.value.username,
+      this.signupForm.value.email,
+      this.signupForm.value.password
+    );
+    console.log(userInfo);
   }
 
   onChange(event) {

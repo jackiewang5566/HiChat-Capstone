@@ -1,30 +1,52 @@
 <div class="container">
     <div class="card-panel login-panel">
-        <form class="col s12" action="/" onSubmit={onSubmit}>
+        <form class="col s12" [formGroup]="loginForm" onSubmit="onSubmit()" novalidate>
             <h4 class="center-align">Login</h4>
+            <!-- error message -->
             <div class="row" *ngIf="errors?.summary">
               <p class="error-message">{{ errors.summary }}</p>
             </div>
+            <!-- email -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input class="validate" id="email" type="email" name="email" onChange={onChange}/>
-                    <label htmlFor='email'>Email</label>
+                    <input 
+                          class="validate" 
+                          id="email" 
+                          type="email" 
+                          name="email" 
+                          formControlName="email"
+                          required />
+                    <label for='email'>Email</label>
                 </div>
             </div>
-            <div class="row" *ngIf="errors?.email">
-              <p class="error-message">{{ errors.email }}</p>
+            <!-- email error message -->
+            <div class="row" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <p class="error-message" *ngIf="email.errors.required">Email is required, please enter your email address.</p>
+              <p class="error-message" *ngIf="email.errors.pattern">Not a valid email address, please enter another one.</p>
             </div>
+            <!-- password -->
             <div class="row">
                 <div class="input-field col s12">
-                    <input class="validate" id="password" type="password" name="password" onChange={onChange}/>
-                    <label htmlFor='password'>Password</label>
+                    <input 
+                          class="validate" 
+                          id="password" 
+                          type="password" 
+                          name="password" 
+                          formControlName="password"
+                          required/>
+                    <label for='password'>Password</label>
                 </div>
             </div>
-            <div class="row" *ngIf="errors?.password">
-              <p class="error-message">{{ errors.password }}</p>
+            <!-- password error message -->
+            <div class="row" *ngIf="password.invalid && (password.dirty || password.touched)">
+              <p class="error-message" *ngIf="password.errors.required">Password is required, please enter your password.</p>
             </div>
+            <!-- login button -->
             <div class="row right-align">
-                <input type="submit" class="waves-effect waves-light btn indigo lighten-1" value='Log in'/>
+                <button 
+                      type="submit" 
+                      class="waves-effect waves-light btn indigo lighten-1" 
+                      [disabled]="!loginForm.valid">Log in</button>
             </div>
             <div class="row">
                 <p class="right-align"> New to HiChat?  <a [routerLink]="['/signup']">Sign Up</a></p>

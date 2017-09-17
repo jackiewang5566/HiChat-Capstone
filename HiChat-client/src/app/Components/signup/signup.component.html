@@ -2,6 +2,7 @@
     <div class="card-panel login-panel">
         <form class="col s12" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <h4 class="center-align">Sign up</h4>
+            <!-- error message -->
             <div class="row" *ngIf="errors?.summary">
               <p class="error-message">{{ errors.summary }}</p>
             </div>
@@ -22,7 +23,6 @@
             <div class="row" *ngIf="username.invalid && (username.dirty || username.touched)">
               <p class="error-message" *ngIf="username.errors.required">Username is required, please enter your username.</p>
             </div>
-
             <!-- email -->
             <div class="row">
                 <div class="input-field col s12">
@@ -36,7 +36,6 @@
                     <label for='email'>Email</label>
                 </div>
             </div>
-
             <!-- email error message -->
             <div class="row" *ngIf="email.invalid && (email.dirty || email.touched)">
               <p class="error-message" *ngIf="email.errors.required">Email is required, please enter your email address.</p>
@@ -76,10 +75,15 @@
             <!-- confirm_password error message -->
             <div class="row" *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)">
               <p class="error-message" *ngIf="confirm_password.errors.required">Confirm password is required, please enter your confirm password.</p>
-              <p class="error-message" *ngIf="confirm_password.errors.password_not_match">Password not matched</p>
-            </div> 
+              <p class="error-message" *ngIf="!confirm_password.errors.required && confirm_password.errors.password_not_match">Password not matched</p>
+            </div>
+            <!-- signup button -->
             <div class="row right-align">
-                <button type="submit" class="waves-effect waves-light btn indigo lighten-1">Sign up</button>
+                <button 
+                        type="submit"
+                        id="signupBtn"
+                        [disabled]="!signupForm.valid"
+                        class="waves-effect waves-light btn indigo lighten-1">Sign up</button>
             </div>
             <div class="row">
                 <p class="right-align"> Already have an account?  <a [routerLink]="['/login']">Login</a></p>

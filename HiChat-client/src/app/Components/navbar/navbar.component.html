@@ -1,0 +1,22 @@
+<div class="row">
+    <nav class="nav-bar indigo lighten-1">
+        <div class="nav-wrapper">
+          <div class="col s12">
+            <a href="/" class="brand-logo">HiChat</a>
+            <ul id="nav-mobile" class="right">
+              <div *ngIf="false; else unAuthenticated">
+                  <!-- <li>{Auth.getEmail()}</li> -->
+                  <li><a [routerLink]="['/logout']">Log out</a></li>
+              </div>
+                 <!-- Auth.isUserAuthenticated() ?  -->
+              <ng-template #unAuthenticated>
+                  <li><a [routerLink]="['/login']">Log in</a></li>    
+                  <li><a [routerLink]="['/signup']">Sign up</a></li> 
+              </ng-template> 
+            </ul>
+          </div>
+        </div>
+    </nav>
+    <br/>
+    
+</div>

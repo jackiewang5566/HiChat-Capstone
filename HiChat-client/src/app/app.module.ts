@@ -5,14 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import Components
 import { AppComponent } from './app.component';
-import { LoginComponent } from './Components/login/login.component';
-import { NavbarComponent } from './Components/navbar/navbar.component';
-import { SignupComponent } from './Components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 // import Services
-import { AuthService } from './Services/auth.service';
-import { ErrorService } from './Services/error.service';
-import { UsersService } from './Services/users.service';
+import { AuthService } from './services/auth.service';
+import { ErrorService } from './services/error.service';
+import { UsersService } from './services/users.service';
 
 // import routing
 import { routing } from 'app/app.routes';

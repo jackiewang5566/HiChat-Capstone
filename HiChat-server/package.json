@@ -1,0 +1,24 @@
+{
+  "name": "hichat-server",
+  "version": "1.0.0",
+  "description": "HiChat-Capstone web server side code",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jackiewang5566/HiChat-Capstone.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "Express",
+    "Mongoose"
+  ],
+  "author": "diwang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackiewang5566/HiChat-Capstone/issues"
+  },
+  "homepage": "https://github.com/jackiewang5566/HiChat-Capstone#readme"
+}

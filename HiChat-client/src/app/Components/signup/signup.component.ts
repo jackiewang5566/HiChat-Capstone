@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { User } from 'app/models/user.model';
+import { Router } from '@angular/router';
+
 import { AuthService } from 'app/services/auth.service';
+import { User } from 'app/models/user.model';
 import { validateEqualValidator } from 'app/shared/equal-validator.directive';
 
 @Component({
@@ -12,7 +14,11 @@ import { validateEqualValidator } from 'app/shared/equal-validator.directive';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) { }
+  constructor(
+    private authService: AuthService, 
+    private fb: FormBuilder,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -50,7 +56,10 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.password
     );
 
-    this.authService.signupUser(userInfo);
+    this.authService.signupUser(userInfo)
+                  .then(() => {
+                    this.router.navigateByUrl('/login');
+                  });
   }
 
   onChange(event) {

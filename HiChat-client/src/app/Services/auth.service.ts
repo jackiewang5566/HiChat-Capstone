@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/toPromise';
 
 import { ErrorService } from './error.service';
 import { User } from '../models/user.model';
@@ -20,11 +21,15 @@ export class AuthService {
         });
         const options = new RequestOptions({ headers: headers });
         return this.http.post('api/v1/auth/signup', body, options)
-                        .map((response: Response) => response.json())
-                        .catch((error: Response) => {
-                            this.errorService.handleError(error.json());
-                            return Observable.throw(error.json());
+                        .toPromise()
+                        .then(function (res) {
+                            console.log(res);
                         })
+                        // .map((response: Response) => response.json())
+                        // .catch((error: Response) => {
+                        //     this.errorService.handleError(error.json());
+                        //     return Observable.throw(error.json());
+                        // });
     }
 
     /** 

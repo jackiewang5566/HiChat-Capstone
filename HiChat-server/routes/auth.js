@@ -114,7 +114,7 @@ function validateLoginForm(payload) {
     let isFormValid = true;
     let message = '';
 
-    if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
+    if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
         isFormValid = false;
         errors.email = 'Please provide your email address.'
     }

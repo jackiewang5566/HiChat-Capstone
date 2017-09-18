@@ -362,9 +362,10 @@ module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-p
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_app_models_user_model__ = __webpack_require__("../../../../../src/app/models/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/shared/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__ = __webpack_require__("../../../../../src/app/models/user.model.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_app_shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/shared/equal-validator.directive.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -380,10 +381,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var SignupComponent = (function () {
-    function SignupComponent(authService, fb) {
+    function SignupComponent(authService, fb, router) {
         this.authService = authService;
         this.fb = fb;
+        this.router = router;
     }
     SignupComponent.prototype.ngOnInit = function () {
         this.signupForm = this.fb.group({
@@ -394,7 +397,7 @@ var SignupComponent = (function () {
             ]),
             password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required],
             confirm_password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required]
-        }, { validator: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */])('password', 'confirm_password') });
+        }, { validator: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_app_shared_equal_validator_directive__["a" /* validateEqualValidator */])('password', 'confirm_password') });
     };
     Object.defineProperty(SignupComponent.prototype, "username", {
         get: function () {
@@ -425,8 +428,12 @@ var SignupComponent = (function () {
         configurable: true
     });
     SignupComponent.prototype.onSubmit = function () {
-        var userInfo = new __WEBPACK_IMPORTED_MODULE_2_app_models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
-        this.authService.signupUser(userInfo);
+        var _this = this;
+        var userInfo = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
+        this.authService.signupUser(userInfo)
+            .then(function () {
+            _this.router.navigateByUrl('/login');
+        });
     };
     SignupComponent.prototype.onChange = function (event) {
         var field = event.target.name;
@@ -439,10 +446,10 @@ SignupComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/signup/signup.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/signup/signup.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], SignupComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=signup.component.js.map
 
 /***/ }),
@@ -453,10 +460,10 @@ var _a, _b;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return User; });
 var User = (function () {
-    function User(email, password, username) {
+    function User(username, email, password) {
+        this.username = username;
         this.email = email;
         this.password = password;
-        this.username = username;
     }
     return User;
 }());
@@ -471,8 +478,8 @@ var User = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__error_service__ = __webpack_require__("../../../../../src/app/services/error.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -497,18 +504,21 @@ var AuthService = (function () {
      * Register a user.
      */
     AuthService.prototype.signupUser = function (user) {
-        var _this = this;
         var body = JSON.stringify(user);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({
             'Content-Type': 'application/json'
         });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
         return this.http.post('api/v1/auth/signup', body, options)
-            .map(function (response) { return response.json(); })
-            .catch(function (error) {
-            _this.errorService.handleError(error.json());
-            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(error.json());
+            .toPromise()
+            .then(function (res) {
+            console.log(res);
         });
+        // .map((response: Response) => response.json())
+        // .catch((error: Response) => {
+        //     this.errorService.handleError(error.json());
+        //     return Observable.throw(error.json());
+        // });
     };
     /**
      * Authenticate a user. Save a token string in localStorage.

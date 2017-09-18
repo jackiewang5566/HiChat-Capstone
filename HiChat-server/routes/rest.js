@@ -13,15 +13,6 @@ restClient.registerMethod('build_and_run', EXECUTOR_SERVER_URL, 'POST');
 const UserService = require('../services/userService');
 // const ProblemService = require('../services/problemService');
 
-// POST /api/v1/user/signup
-router.post('/user/signup', jsonParser, (req, res) => {
-    UserService.signupUser(req.body)
-            .then(users => { 
-                console.log(users);
-                return res.json(users);
-            });
-});
-
 // GET /api/v1/problems
 router.get('/problems', function (req, res) {
     ProblemService

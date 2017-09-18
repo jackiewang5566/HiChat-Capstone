@@ -1,9 +1,14 @@
 const app = require('express')();
-const express = require('express');
+const bodyParser = require('body-parser');
 const config = require('./config/config.json');
+const cors = require('cors');
+const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const passport = require('passport');
 
+// routers
+const authRouter = require('./routes/auth');
 const indexRouter = require('./routes/index');
 const restRouter = require('./routes/rest');
 
@@ -16,11 +21,33 @@ require('./models/main').connect(config.mongoDbUri);
 
 
 app.use(express.static(path.join(__dirname, '../public')));
+
+// Load passport strategies
+app.use(passport.initialize());
+var localSignupStrategy = require('./passport/signup_passport');
+var localLoginStrategy = require('./passport/login_passport');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
+
+// remove this after development is done.
+app.use(cors());
+
+app.use(bodyParser.json());
+
 app.use('/', indexRouter);
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1', restRouter);
+
 
 app.use(function (req, res) {
   res.sendFile('index.html', { root: path.join(__dirname, '../public') });
+});
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  res.send('404 Not Found');
 });
 
 const http = require('http');

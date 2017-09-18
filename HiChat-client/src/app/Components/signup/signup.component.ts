@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'app/models/user.model';
-import { UsersService } from 'app/services/users.service';
+import { AuthService } from 'app/services/auth.service';
 import { validateEqualValidator } from 'app/shared/equal-validator.directive';
 
 @Component({
@@ -12,7 +12,7 @@ import { validateEqualValidator } from 'app/shared/equal-validator.directive';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private usersService: UsersService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.signupForm = new FormGroup({
@@ -55,8 +55,8 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.email,
       this.signupForm.value.password
     );
-    
-    this.usersService.signupUser(userInfo);
+
+    this.authService.signupUser(userInfo);
   }
 
   onChange(event) {

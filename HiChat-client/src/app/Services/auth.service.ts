@@ -10,11 +10,13 @@ export class AuthService {
 
   constructor(private http: Http, private errorService: ErrorService) { }
 
+    /**
+     * Register a user.
+     */
     signupUser(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         });
         const options = new RequestOptions({ headers: headers });
         return this.http.post('api/v1/auth/signup', body, options)
@@ -25,7 +27,7 @@ export class AuthService {
                         })
     }
 
-  /** 
+    /** 
      * Authenticate a user. Save a token string in localStorage.
      */
     authenticateUser(token, email) {

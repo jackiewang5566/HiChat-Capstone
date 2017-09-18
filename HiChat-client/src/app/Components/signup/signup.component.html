@@ -49,8 +49,7 @@
                           id="password" 
                           type="password" 
                           name="password" 
-                          formControlName="password"
-                          required/>
+                          formControlName="password" />
                     <label for='password'>Password</label>
                 </div>
             </div>
@@ -66,16 +65,14 @@
                           type="password" 
                           name="confirm_password" 
                           class="validate" 
-                          formControlName="confirm_password"
-                          required
-                          validateEqual="password"/>
+                          formControlName="confirm_password" />
                     <label for="confirm_password">Confirm Password</label>
                 </div>
             </div>
             <!-- confirm_password error message -->
-            <div class="row" *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)">
-              <p class="error-message" *ngIf="confirm_password.errors.required">Confirm password is required, please enter your confirm password.</p>
-              <p class="error-message" *ngIf="!confirm_password.errors.required && confirm_password.errors.password_not_match">Password not matched</p>
+            <div class="row" *ngIf="confirm_password.dirty || confirm_password.touched">
+                <p class="error-message" *ngIf="confirm_password.errors?.required">Confirm password is required, please enter your confirm password.</p>  
+                <p class="error-message" *ngIf="!confirm_password.errors && signupForm.hasError('mismatchedPasswords')">Password not matched.</p>
             </div>
             <!-- signup button -->
             <div class="row right-align">

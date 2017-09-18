@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { User } from 'app/models/user.model';
 import { AuthService } from 'app/services/auth.service';
 import { validateEqualValidator } from 'app/shared/equal-validator.directive';
@@ -12,24 +12,18 @@ import { validateEqualValidator } from 'app/shared/equal-validator.directive';
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.signupForm = new FormGroup({
+    this.signupForm = this.fb.group({
       username: new FormControl(null, Validators.required),
       email: new FormControl(null, [
         Validators.required,
         Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
       ]),
-      password: new FormControl(null, [ 
-        Validators.required,
-        validateEqualValidator
-      ]),
-      confirm_password: new FormControl(null, [
-        Validators.required,
-        validateEqualValidator
-      ])
-    });
+      password: [null, Validators.required],
+      confirm_password: [null, Validators.required]
+    }, { validator: validateEqualValidator('password', 'confirm_password') });
     
   }
 

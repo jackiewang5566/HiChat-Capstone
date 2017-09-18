@@ -227,12 +227,12 @@ var LoginComponent = (function () {
     function LoginComponent() {
     }
     LoginComponent.prototype.ngOnInit = function () {
-        this.loginForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormGroup */]({
-            email: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+        this.loginForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* FormGroup */]({
+            email: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormControl */](null, [
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required,
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             ]),
-            password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required)
+            password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required)
         });
     };
     LoginComponent.prototype.processForm = function (event) {
@@ -352,7 +352,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/signup/signup.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-panel\">\n        <form class=\"col s12\" [formGroup]=\"signupForm\" (ngSubmit)=\"onSubmit()\">\n            <h4 class=\"center-align\">Sign up</h4>\n            <!-- error message -->\n            <div class=\"row\" *ngIf=\"errors?.summary\">\n              <p class=\"error-message\">{{ errors.summary }}</p>\n            </div>\n            <!-- username -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"username\" \n                          type=\"text\" \n                          name=\"username\" \n                          formControlName=\"username\" \n                          required />\n                    <label for='username'>Username</label>\n                </div>\n            </div>\n            <!-- username error message -->\n            <div class=\"row\" *ngIf=\"username.invalid && (username.dirty || username.touched)\">\n              <p class=\"error-message\" *ngIf=\"username.errors.required\">Username is required, please enter your username.</p>\n            </div>\n            <!-- email -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"email\" \n                          type=\"email\" \n                          name=\"email\" \n                          formControlName=\"email\"\n                          required />\n                    <label for='email'>Email</label>\n                </div>\n            </div>\n            <!-- email error message -->\n            <div class=\"row\" *ngIf=\"email.invalid && (email.dirty || email.touched)\">\n              <p class=\"error-message\" *ngIf=\"email.errors.required\">Email is required, please enter your email address.</p>\n              <p class=\"error-message\" *ngIf=\"email.errors.pattern\">Not a valid email address, please enter another one.</p>\n            </div>\n            <!-- password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"password\" \n                          type=\"password\" \n                          name=\"password\" \n                          formControlName=\"password\"\n                          required/>\n                    <label for='password'>Password</label>\n                </div>\n            </div>\n            <!-- password error message -->\n            <div class=\"row\" *ngIf=\"password.invalid && (password.dirty || password.touched)\">\n              <p class=\"error-message\" *ngIf=\"password.errors.required\">Password is required, please enter your password.</p>\n            </div> \n            <!-- confirm password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          id=\"confirm_password\" \n                          type=\"password\" \n                          name=\"confirm_password\" \n                          class=\"validate\" \n                          formControlName=\"confirm_password\"\n                          required\n                          validateEqual=\"password\"/>\n                    <label for=\"confirm_password\">Confirm Password</label>\n                </div>\n            </div>\n            <!-- confirm_password error message -->\n            <div class=\"row\" *ngIf=\"confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)\">\n              <p class=\"error-message\" *ngIf=\"confirm_password.errors.required\">Confirm password is required, please enter your confirm password.</p>\n              <p class=\"error-message\" *ngIf=\"!confirm_password.errors.required && confirm_password.errors.password_not_match\">Password not matched</p>\n            </div>\n            <!-- signup button -->\n            <div class=\"row right-align\">\n                <button \n                        type=\"submit\"\n                        id=\"signupBtn\"\n                        [disabled]=\"!signupForm.valid\"\n                        class=\"waves-effect waves-light btn indigo lighten-1\">Sign up</button>\n            </div>\n            <div class=\"row\">\n                <p class=\"right-align\"> Already have an account?  <a [routerLink]=\"['/login']\">Login</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
+module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-panel\">\n        <form class=\"col s12\" [formGroup]=\"signupForm\" (ngSubmit)=\"onSubmit()\">\n            <h4 class=\"center-align\">Sign up</h4>\n            <!-- error message -->\n            <div class=\"row\" *ngIf=\"errors?.summary\">\n              <p class=\"error-message\">{{ errors.summary }}</p>\n            </div>\n            <!-- username -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"username\" \n                          type=\"text\" \n                          name=\"username\" \n                          formControlName=\"username\" \n                          required />\n                    <label for='username'>Username</label>\n                </div>\n            </div>\n            <!-- username error message -->\n            <div class=\"row\" *ngIf=\"username.invalid && (username.dirty || username.touched)\">\n              <p class=\"error-message\" *ngIf=\"username.errors.required\">Username is required, please enter your username.</p>\n            </div>\n            <!-- email -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"email\" \n                          type=\"email\" \n                          name=\"email\" \n                          formControlName=\"email\"\n                          required />\n                    <label for='email'>Email</label>\n                </div>\n            </div>\n            <!-- email error message -->\n            <div class=\"row\" *ngIf=\"email.invalid && (email.dirty || email.touched)\">\n              <p class=\"error-message\" *ngIf=\"email.errors.required\">Email is required, please enter your email address.</p>\n              <p class=\"error-message\" *ngIf=\"email.errors.pattern\">Not a valid email address, please enter another one.</p>\n            </div>\n            <!-- password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"password\" \n                          type=\"password\" \n                          name=\"password\" \n                          formControlName=\"password\" />\n                    <label for='password'>Password</label>\n                </div>\n            </div>\n            <!-- password error message -->\n            <div class=\"row\" *ngIf=\"password.invalid && (password.dirty || password.touched)\">\n              <p class=\"error-message\" *ngIf=\"password.errors.required\">Password is required, please enter your password.</p>\n            </div> \n            <!-- confirm password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          id=\"confirm_password\" \n                          type=\"password\" \n                          name=\"confirm_password\" \n                          class=\"validate\" \n                          formControlName=\"confirm_password\" />\n                    <label for=\"confirm_password\">Confirm Password</label>\n                </div>\n            </div>\n            <!-- confirm_password error message -->\n            <div class=\"row\" *ngIf=\"confirm_password.dirty || confirm_password.touched\">\n                <p class=\"error-message\" *ngIf=\"confirm_password.errors?.required\">Confirm password is required, please enter your confirm password.</p>  \n                <p class=\"error-message\" *ngIf=\"!confirm_password.errors && signupForm.hasError('mismatchedPasswords')\">Password not matched.</p>\n            </div>\n            <!-- signup button -->\n            <div class=\"row right-align\">\n                <button \n                        type=\"submit\"\n                        id=\"signupBtn\"\n                        [disabled]=\"!signupForm.valid\"\n                        class=\"waves-effect waves-light btn indigo lighten-1\">Sign up</button>\n            </div>\n            <div class=\"row\">\n                <p class=\"right-align\"> Already have an account?  <a [routerLink]=\"['/login']\">Login</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -381,25 +381,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var SignupComponent = (function () {
-    function SignupComponent(authService) {
+    function SignupComponent(authService, fb) {
         this.authService = authService;
+        this.fb = fb;
     }
     SignupComponent.prototype.ngOnInit = function () {
-        this.signupForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormGroup */]({
-            username: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required),
-            email: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+        this.signupForm = this.fb.group({
+            username: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required),
+            email: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormControl */](null, [
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required,
+                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
             ]),
-            password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */]
-            ]),
-            confirm_password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* FormControl */](null, [
-                __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */]
-            ])
-        });
+            password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required],
+            confirm_password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required]
+        }, { validator: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4_app_shared_equal_validator_directive__["a" /* validateEqualValidator */])('password', 'confirm_password') });
     };
     Object.defineProperty(SignupComponent.prototype, "username", {
         get: function () {
@@ -444,10 +439,10 @@ SignupComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/signup/signup.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/signup/signup.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* FormBuilder */]) === "function" && _b || Object])
 ], SignupComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=signup.component.js.map
 
 /***/ }),
@@ -498,11 +493,13 @@ var AuthService = (function () {
         this.http = http;
         this.errorService = errorService;
     }
+    /**
+     * Register a user.
+     */
     AuthService.prototype.signupUser = function (user) {
         var _this = this;
         var body = JSON.stringify(user);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
@@ -514,8 +511,8 @@ var AuthService = (function () {
         });
     };
     /**
-       * Authenticate a user. Save a token string in localStorage.
-       */
+     * Authenticate a user. Save a token string in localStorage.
+     */
     AuthService.prototype.authenticateUser = function (token, email) {
         localStorage.setItem('token', token);
         localStorage.setItem('email', email);
@@ -635,17 +632,16 @@ var _a, _b;
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = validateEqualValidator;
-function validateEqualValidator(control) {
-    var password = control.parent && control.parent.controls ? control.parent.controls['password'].value : null;
-    var confirmed_password = control.parent && control.parent.controls ? control.parent.controls['confirm_password'].value : null;
-    if (confirmed_password !== password && confirmed_password !== null && password !== null) {
-        return {
-            'password_not_match': {
-                value: 'Password not match.'
-            }
-        };
-    }
-    return null;
+function validateEqualValidator(password_key, confirm_password_key) {
+    return function (group) {
+        var password = group.controls[password_key];
+        var confirm_password = group.controls[confirm_password_key];
+        if (password.value !== confirm_password.value) {
+            return {
+                mismatchedPasswords: true
+            };
+        }
+    };
 }
 //# sourceMappingURL=equal-validator.directive.js.map
 

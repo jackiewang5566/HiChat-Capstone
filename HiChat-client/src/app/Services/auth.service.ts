@@ -9,12 +9,15 @@ import { User } from '../models/user.model';
 @Injectable()
 export class AuthService {
 
-  constructor(private http: Http, private errorService: ErrorService) { }
+    constructor(
+      private http: Http, 
+      private errorService: ErrorService
+    ) { }
 
     /**
      * Register a user.
      */
-    signupUser(user: User) {
+    signup(user: User) {
         const body = JSON.stringify(user);
         const headers = new Headers({ 
             'Content-Type': 'application/json'
@@ -23,6 +26,7 @@ export class AuthService {
         return this.http.post('api/v1/auth/signup', body, options)
                         .toPromise()
                         .then(function (res) {
+                            console.log('signup returned below');
                             console.log(res);
                         })
                         // .map((response: Response) => response.json())
@@ -30,6 +34,24 @@ export class AuthService {
                         //     this.errorService.handleError(error.json());
                         //     return Observable.throw(error.json());
                         // });
+    }
+
+    /**
+     * User login
+     */
+    login(user: User) {
+        const body = JSON.stringify(user);
+        const headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+        const options = new RequestOptions({ headers: headers });
+        return this.http.post('api/v1/auth/login', body, options)
+                        .toPromise()
+                        .then(function (res) {
+                            console.log('login returned below');
+                            console.log(res)
+                            return res;
+                        })
     }
 
     /** 

@@ -211,6 +211,9 @@ module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-p
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__ = __webpack_require__("../../../../../src/app/models/user.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -223,8 +226,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
+
+
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
     }
     LoginComponent.prototype.ngOnInit = function () {
         this.loginForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* FormGroup */]({
@@ -235,13 +243,13 @@ var LoginComponent = (function () {
             password: new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* FormControl */](null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["d" /* Validators */].required)
         });
     };
-    LoginComponent.prototype.processForm = function (event) {
-        event.preventDefault();
-        // TODO
-        var email = '';
-        var password = '';
-    };
     Object.defineProperty(LoginComponent.prototype, "email", {
+        // processForm(event) {
+        //   event.preventDefault();
+        //   // TODO
+        //   const email = '';
+        //   const password = '';
+        // }
         get: function () {
             return this.loginForm.get('email');
         },
@@ -255,6 +263,29 @@ var LoginComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var user = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](null, this.loginForm.value.email, this.loginForm.value.password);
+        this.authService.login(user)
+            .then(function (response) {
+            if (response.status === 200) {
+                _this.errors = {};
+                response.json().then(function (json) {
+                    console.log(json);
+                    this.authService.authenticateUser(json.token, this.loginForm.value.email);
+                    this.context.router.replace('/');
+                }.bind(_this));
+            }
+            else {
+                console.log('Login failed');
+                response.json().then(function (json) {
+                    var errors = json.errors ? json.errors : {};
+                    this.errors.summary = json.message;
+                    this.setState({ errors: errors });
+                }.bind(_this));
+            }
+        });
+    };
     return LoginComponent;
 }());
 LoginComponent = __decorate([
@@ -263,9 +294,10 @@ LoginComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/login/login.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/login/login.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__["a" /* AuthService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _b || Object])
 ], LoginComponent);
 
+var _a, _b;
 //# sourceMappingURL=login.component.js.map
 
 /***/ }),
@@ -430,13 +462,10 @@ var SignupComponent = (function () {
     SignupComponent.prototype.onSubmit = function () {
         var _this = this;
         var userInfo = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
-        this.authService.signupUser(userInfo)
+        this.authService.signup(userInfo)
             .then(function () {
             _this.router.navigateByUrl('/login');
         });
-    };
-    SignupComponent.prototype.onChange = function (event) {
-        var field = event.target.name;
     };
     return SignupComponent;
 }());
@@ -503,7 +532,7 @@ var AuthService = (function () {
     /**
      * Register a user.
      */
-    AuthService.prototype.signupUser = function (user) {
+    AuthService.prototype.signup = function (user) {
         var body = JSON.stringify(user);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({
             'Content-Type': 'application/json'
@@ -512,6 +541,7 @@ var AuthService = (function () {
         return this.http.post('api/v1/auth/signup', body, options)
             .toPromise()
             .then(function (res) {
+            console.log('signup returned below');
             console.log(res);
         });
         // .map((response: Response) => response.json())
@@ -519,6 +549,23 @@ var AuthService = (function () {
         //     this.errorService.handleError(error.json());
         //     return Observable.throw(error.json());
         // });
+    };
+    /**
+     * User login
+     */
+    AuthService.prototype.login = function (user) {
+        var body = JSON.stringify(user);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({
+            'Content-Type': 'application/json'
+        });
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.post('api/v1/auth/login', body, options)
+            .toPromise()
+            .then(function (res) {
+            console.log('login returned below');
+            console.log(res);
+            return res;
+        });
     };
     /**
      * Authenticate a user. Save a token string in localStorage.

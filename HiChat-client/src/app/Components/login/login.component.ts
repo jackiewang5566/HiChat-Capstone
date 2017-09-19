@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { AuthService } from 'app/services/auth.service';
+import { User } from 'app/models/user.model';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +12,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
+  errors: any
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -21,12 +29,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  processForm(event) {
-    event.preventDefault();
-    // TODO
-    const email = '';
-    const password = '';
-  }
+  // processForm(event) {
+  //   event.preventDefault();
+  //   // TODO
+  //   const email = '';
+  //   const password = '';
+  // }
 
   get email() {
     return this.loginForm.get('email');
@@ -34,5 +42,33 @@ export class LoginComponent implements OnInit {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  onSubmit() {
+    const user = new User(
+      null, 
+      this.loginForm.value.email, 
+      this.loginForm.value.password
+    );
+
+    this.authService.login(user)
+        .then(response => {
+            if (response.status === 200) {
+                this.errors = {};
+
+                response.json().then(function (json) { // .json() method is an asychronous process
+                    console.log(json);
+                    this.authService.authenticateUser(json.token, this.loginForm.value.email,);
+                    this.context.router.replace('/');
+                }.bind(this));
+            } else {
+                console.log('Login failed');
+                response.json().then(function (json) {
+                    const errors = json.errors ? json.errors: {};
+                    this.errors.summary = json.message;
+                    this.setState({ errors });
+                }.bind(this));
+            }
+        });
   }
 }

@@ -56,14 +56,14 @@ export class SignupComponent implements OnInit {
       this.signupForm.value.password
     );
 
-    this.authService.signupUser(userInfo)
+    this.authService.signup(userInfo)
                   .then(() => {
                     this.router.navigateByUrl('/login');
                   });
   }
 
-  onChange(event) {
-    const field = event.target.name;
-  }
+  // onChange(event) {
+  //   const field = event.target.name;
+  // }
 
 }

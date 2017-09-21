@@ -16,6 +16,9 @@ const restRouter = require('./routes/rest');
 // const db_password = '88888888';
 // mongoose.connect(`mongodb://${db_username}:${db_password}@ds141454.mlab.com:41454/hichat-capstone`);
 
+// put below into config.json to replace mongoDbUri line if using mlab
+// "mongoDbUri": "mongodb://diwang_hichat_capstone:88888888@ds141454.mlab.com:41454/hichat-capstone",
+
 // connect mongodb
 require('./models/main').connect(config.mongoDbUri);
 

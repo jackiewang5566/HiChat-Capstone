@@ -1,6 +1,6 @@
 <div class="container">
     <div class="card-panel login-panel">
-        <form class="col s12" [formGroup]="loginForm" onSubmit="onSubmit()" novalidate>
+        <form class="col s12" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
             <h4 class="center-align">Login</h4>
             <!-- error message -->
             <div class="row" *ngIf="errors?.summary">

@@ -50,7 +50,7 @@ export class AuthService {
                         .then(function (res) {
                             console.log('login returned below');
                             console.log(res)
-                            return res;
+                            return res.json();
                         })
     }
 

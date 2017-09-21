@@ -201,7 +201,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-panel\">\n        <form class=\"col s12\" [formGroup]=\"loginForm\" onSubmit=\"onSubmit()\" novalidate>\n            <h4 class=\"center-align\">Login</h4>\n            <!-- error message -->\n            <div class=\"row\" *ngIf=\"errors?.summary\">\n              <p class=\"error-message\">{{ errors.summary }}</p>\n            </div>\n            <!-- email -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"email\" \n                          type=\"email\" \n                          name=\"email\" \n                          formControlName=\"email\"\n                          required />\n                    <label for='email'>Email</label>\n                </div>\n            </div>\n            <!-- email error message -->\n            <div class=\"row\" *ngIf=\"email.invalid && (email.dirty || email.touched)\">\n              <p class=\"error-message\" *ngIf=\"email.errors.required\">Email is required, please enter your email address.</p>\n              <p class=\"error-message\" *ngIf=\"email.errors.pattern\">Not a valid email address, please enter another one.</p>\n            </div>\n            <!-- password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"password\" \n                          type=\"password\" \n                          name=\"password\" \n                          formControlName=\"password\"\n                          required/>\n                    <label for='password'>Password</label>\n                </div>\n            </div>\n            <!-- password error message -->\n            <div class=\"row\" *ngIf=\"password.invalid && (password.dirty || password.touched)\">\n              <p class=\"error-message\" *ngIf=\"password.errors.required\">Password is required, please enter your password.</p>\n            </div>\n            <!-- login button -->\n            <div class=\"row right-align\">\n                <button \n                      type=\"submit\" \n                      class=\"waves-effect waves-light btn indigo lighten-1\" \n                      [disabled]=\"!loginForm.valid\">Log in</button>\n            </div>\n            <div class=\"row\">\n                <p class=\"right-align\"> New to HiChat?  <a [routerLink]=\"['/signup']\">Sign Up</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
+module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-panel\">\n        <form class=\"col s12\" [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\" novalidate>\n            <h4 class=\"center-align\">Login</h4>\n            <!-- error message -->\n            <div class=\"row\" *ngIf=\"errors?.summary\">\n              <p class=\"error-message\">{{ errors.summary }}</p>\n            </div>\n            <!-- email -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"email\" \n                          type=\"email\" \n                          name=\"email\" \n                          formControlName=\"email\"\n                          required />\n                    <label for='email'>Email</label>\n                </div>\n            </div>\n            <!-- email error message -->\n            <div class=\"row\" *ngIf=\"email.invalid && (email.dirty || email.touched)\">\n              <p class=\"error-message\" *ngIf=\"email.errors.required\">Email is required, please enter your email address.</p>\n              <p class=\"error-message\" *ngIf=\"email.errors.pattern\">Not a valid email address, please enter another one.</p>\n            </div>\n            <!-- password -->\n            <div class=\"row\">\n                <div class=\"input-field col s12\">\n                    <input \n                          class=\"validate\" \n                          id=\"password\" \n                          type=\"password\" \n                          name=\"password\" \n                          formControlName=\"password\"\n                          required/>\n                    <label for='password'>Password</label>\n                </div>\n            </div>\n            <!-- password error message -->\n            <div class=\"row\" *ngIf=\"password.invalid && (password.dirty || password.touched)\">\n              <p class=\"error-message\" *ngIf=\"password.errors.required\">Password is required, please enter your password.</p>\n            </div>\n            <!-- login button -->\n            <div class=\"row right-align\">\n                <button \n                      type=\"submit\" \n                      class=\"waves-effect waves-light btn indigo lighten-1\" \n                      [disabled]=\"!loginForm.valid\">Log in</button>\n            </div>\n            <div class=\"row\">\n                <p class=\"right-align\"> New to HiChat?  <a [routerLink]=\"['/signup']\">Sign Up</a></p>\n            </div>\n        </form>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -265,24 +265,29 @@ var LoginComponent = (function () {
     });
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
+        console.log('test');
         var user = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](null, this.loginForm.value.email, this.loginForm.value.password);
         this.authService.login(user)
             .then(function (response) {
+            console.log(response);
             if (response.status === 200) {
+                console.log('login success');
                 _this.errors = {};
-                response.json().then(function (json) {
-                    console.log(json);
-                    this.authService.authenticateUser(json.token, this.loginForm.value.email);
-                    this.context.router.replace('/');
-                }.bind(_this));
+                console.log(response);
+                _this.authService.authenticateUser(response.token, _this.loginForm.value.email);
+                // response.json().then(function (json) { // .json() method is an asychronous process
+                //     console.log(json);
+                //     this.authService.authenticateUser(json.token, this.loginForm.value.email,);
+                //     this.context.router.replace('/');
+                // }.bind(this));
             }
             else {
                 console.log('Login failed');
-                response.json().then(function (json) {
-                    var errors = json.errors ? json.errors : {};
-                    this.errors.summary = json.message;
-                    this.setState({ errors: errors });
-                }.bind(_this));
+                // response.json().then(function (json) {
+                //     const errors = json.errors ? json.errors: {};
+                //     this.errors.summary = json.message;
+                //     this.setState({ errors });
+                // }.bind(this));
             }
         });
     };
@@ -564,7 +569,7 @@ var AuthService = (function () {
             .then(function (res) {
             console.log('login returned below');
             console.log(res);
-            return res;
+            return res.json();
         });
     };
     /**

@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('test');
     const user = new User(
       null, 
       this.loginForm.value.email, 
@@ -53,21 +54,25 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(user)
         .then(response => {
+          console.log(response);
             if (response.status === 200) {
+                console.log('login success');
                 this.errors = {};
-
-                response.json().then(function (json) { // .json() method is an asychronous process
-                    console.log(json);
-                    this.authService.authenticateUser(json.token, this.loginForm.value.email,);
-                    this.context.router.replace('/');
-                }.bind(this));
+                console.log(response);
+                
+                this.authService.authenticateUser(response.token, this.loginForm.value.email);
+                // response.json().then(function (json) { // .json() method is an asychronous process
+                //     console.log(json);
+                //     this.authService.authenticateUser(json.token, this.loginForm.value.email,);
+                //     this.context.router.replace('/');
+                // }.bind(this));
             } else {
                 console.log('Login failed');
-                response.json().then(function (json) {
-                    const errors = json.errors ? json.errors: {};
-                    this.errors.summary = json.message;
-                    this.setState({ errors });
-                }.bind(this));
+                // response.json().then(function (json) {
+                //     const errors = json.errors ? json.errors: {};
+                //     this.errors.summary = json.message;
+                //     this.setState({ errors });
+                // }.bind(this));
             }
         });
   }

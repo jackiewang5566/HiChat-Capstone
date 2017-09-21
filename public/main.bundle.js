@@ -268,12 +268,10 @@ var LoginComponent = (function () {
         console.log('test');
         var user = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](null, this.loginForm.value.email, this.loginForm.value.password);
         this.authService.login(user)
-            .then(function (response) {
+            .subscribe(function (response) {
             console.log(response);
             if (response.status === 200) {
-                console.log('login success');
                 _this.errors = {};
-                console.log(response);
                 _this.authService.authenticateUser(response.token, _this.loginForm.value.email);
                 // response.json().then(function (json) { // .json() method is an asychronous process
                 //     console.log(json);
@@ -468,7 +466,7 @@ var SignupComponent = (function () {
         var _this = this;
         var userInfo = new __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__["a" /* User */](this.signupForm.value.username, this.signupForm.value.email, this.signupForm.value.password);
         this.authService.signup(userInfo)
-            .then(function () {
+            .subscribe(function () {
             _this.router.navigateByUrl('/login');
         });
     };
@@ -512,9 +510,11 @@ var User = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__error_service__ = __webpack_require__("../../../../../src/app/services/error.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__ = __webpack_require__("../../../../rxjs/add/operator/toPromise.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_toPromise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__error_service__ = __webpack_require__("../../../../../src/app/services/error.service.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -525,6 +525,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -544,11 +545,12 @@ var AuthService = (function () {
         });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
         return this.http.post('api/v1/auth/signup', body, options)
-            .toPromise()
-            .then(function (res) {
-            console.log('signup returned below');
-            console.log(res);
-        });
+            .map(function (response) { return response.json(); });
+        // .toPromise()
+        // .then(function (res) {
+        //     console.log('signup returned below');
+        //     console.log(res);
+        // })
         // .map((response: Response) => response.json())
         // .catch((error: Response) => {
         //     this.errorService.handleError(error.json());
@@ -565,12 +567,16 @@ var AuthService = (function () {
         });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
         return this.http.post('api/v1/auth/login', body, options)
-            .toPromise()
-            .then(function (res) {
-            console.log('login returned below');
+            .map(function (response) {
+            var res = response.json();
+            res.status = response.status;
             console.log(res);
-            return res.json();
+            return res;
         });
+        // .toPromise()
+        // .then(function (res) {
+        //     return res.json();
+        // })
     };
     /**
      * Authenticate a user. Save a token string in localStorage.
@@ -608,7 +614,7 @@ var AuthService = (function () {
 }());
 AuthService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__error_service__["a" /* ErrorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__error_service__["a" /* ErrorService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__error_service__["a" /* ErrorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__error_service__["a" /* ErrorService */]) === "function" && _b || Object])
 ], AuthService);
 
 var _a, _b;

@@ -53,12 +53,10 @@ export class LoginComponent implements OnInit {
     );
 
     this.authService.login(user)
-        .then(response => {
+        .subscribe(response => {
           console.log(response);
             if (response.status === 200) {
-                console.log('login success');
                 this.errors = {};
-                console.log(response);
                 
                 this.authService.authenticateUser(response.token, this.loginForm.value.email);
                 // response.json().then(function (json) { // .json() method is an asychronous process

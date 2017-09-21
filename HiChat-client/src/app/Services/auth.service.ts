@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/Rx';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 
@@ -24,11 +25,13 @@ export class AuthService {
         });
         const options = new RequestOptions({ headers: headers });
         return this.http.post('api/v1/auth/signup', body, options)
-                        .toPromise()
-                        .then(function (res) {
-                            console.log('signup returned below');
-                            console.log(res);
-                        })
+                        .map((response: Response) => response.json());
+                        // .toPromise()
+                        // .then(function (res) {
+                        //     console.log('signup returned below');
+                        //     console.log(res);
+                        // })
+
                         // .map((response: Response) => response.json())
                         // .catch((error: Response) => {
                         //     this.errorService.handleError(error.json());
@@ -46,12 +49,16 @@ export class AuthService {
         });
         const options = new RequestOptions({ headers: headers });
         return this.http.post('api/v1/auth/login', body, options)
-                        .toPromise()
-                        .then(function (res) {
-                            console.log('login returned below');
-                            console.log(res)
-                            return res.json();
+                        .map((response: Response) => { 
+                            let res = response.json();
+                            res.status = response.status;
+                            console.log(res);
+                            return res;
                         })
+                        // .toPromise()
+                        // .then(function (res) {
+                        //     return res.json();
+                        // })
     }
 
     /** 

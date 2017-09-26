@@ -22,7 +22,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      username: new FormControl(null, Validators.required),
       email: new FormControl(null, [
         Validators.required,
         Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
@@ -31,10 +30,6 @@ export class SignupComponent implements OnInit {
       confirm_password: [null, Validators.required]
     }, { validator: validateEqualValidator('password', 'confirm_password') });
     
-  }
-
-  get username() {
-    return this.signupForm.get('username');
   }
 
   get email() {
@@ -51,7 +46,6 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     const userInfo = new User(
-      this.signupForm.value.username,
       this.signupForm.value.email,
       this.signupForm.value.password
     );
@@ -62,8 +56,5 @@ export class SignupComponent implements OnInit {
                   });
   }
 
-  // onChange(event) {
-  //   const field = event.target.name;
-  // }
 
 }

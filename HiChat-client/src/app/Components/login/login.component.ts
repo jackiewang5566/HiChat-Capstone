@@ -29,13 +29,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // processForm(event) {
-  //   event.preventDefault();
-  //   // TODO
-  //   const email = '';
-  //   const password = '';
-  // }
-
   get email() {
     return this.loginForm.get('email');
   }
@@ -45,9 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('test');
     const user = new User(
-      null, 
       this.loginForm.value.email, 
       this.loginForm.value.password
     );
@@ -59,6 +50,7 @@ export class LoginComponent implements OnInit {
                 this.errors = {};
                 
                 this.authService.authenticateUser(response.token, this.loginForm.value.email);
+                
                 // response.json().then(function (json) { // .json() method is an asychronous process
                 //     console.log(json);
                 //     this.authService.authenticateUser(json.token, this.loginForm.value.email,);

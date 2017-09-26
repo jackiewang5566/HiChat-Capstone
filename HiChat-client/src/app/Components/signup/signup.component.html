@@ -6,8 +6,9 @@
             <div class="row" *ngIf="errors?.summary">
               <p class="error-message">{{ errors.summary }}</p>
             </div>
+            
             <!-- username -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="input-field col s12">
                     <input 
                           class="validate" 
@@ -18,11 +19,12 @@
                           required />
                     <label for='username'>Username</label>
                 </div>
-            </div>
+            </div> -->
             <!-- username error message -->
-            <div class="row" *ngIf="username.invalid && (username.dirty || username.touched)">
+            <!-- <div class="row" *ngIf="username.invalid && (username.dirty || username.touched)">
               <p class="error-message" *ngIf="username.errors.required">Username is required, please enter your username.</p>
-            </div>
+            </div> -->
+
             <!-- email -->
             <div class="row">
                 <div class="input-field col s12">

@@ -62,15 +62,15 @@ const io = socketIO();
 const server = http.createServer(app);
 // io.attach(server);
 server.listen(3000); 
-server.on('error', onError);
-server.on('listening', onListening);
+// server.on('error', onError);
+// server.on('listening', onListening);
 
-function onError() {
-  throw error;
-}
+// function onError() {
+//   throw error;
+// }
 
-function onListening() {
-  const address = server.address();
-  const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
-  console.log('Listening on ' + bind);
-}
+// function onListening() {
+//   const address = server.address();
+//   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + address.port;
+//   console.log('Listening on ' + bind);
+// }

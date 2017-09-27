@@ -323,7 +323,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">    \n    <nav class=\"nav-bar indigo lighten-1\">\n        <div class=\"nav-wrapper\">\n          <div class=\"col s12\">\n            <a href=\"/\" class=\"brand-logo\">HiChat</a>\n            <ul id=\"nav-mobile\" class=\"right\">\n              <div *ngIf=\"Auth.isUserAuthenticated(); else unAuthenticated\">\n                  <li>{{ Auth.getEmail() }}</li>  \n                  <li><a [routerLink]=\"['/logout']\">Log out</a></li>\n              </div>\n                 <!-- Auth.isUserAuthenticated() ?  -->\n              <ng-template #unAuthenticated>\n                  <li><a [routerLink]=\"['/login']\">Log in</a></li>    \n                  <li><a [routerLink]=\"['/signup']\">Sign up</a></li> \n              </ng-template> \n            </ul>\n          </div>\n        </div>\n    </nav>\n    <br/>\n    \n</div>"
+module.exports = "<div class=\"row\">    \n    <nav class=\"nav-bar indigo lighten-1\">\n        <div class=\"nav-wrapper\">\n          <div class=\"col s12\">\n            <a href=\"/\" class=\"brand-logo\">HiChat</a>\n            <ul id=\"nav-mobile\" class=\"right\">\n              <div *ngIf=\"Auth.isUserAuthenticated(); else unAuthenticated\">\n                  <li>{{ Auth.getEmail() }}</li>  \n                  <li><a [routerLink]=\"['/login']\" (click)=\"logout()\">Log out</a></li>\n              </div>\n                <!-- User is not login case  -->\n              <ng-template #unAuthenticated>\n                  <li><a [routerLink]=\"['/login']\">Log in</a></li>    \n                  <li><a [routerLink]=\"['/signup']\">Sign up</a></li> \n              </ng-template> \n            </ul>\n          </div>\n        </div>\n    </nav>\n    <br/>\n    \n</div>"
 
 /***/ }),
 
@@ -350,6 +350,9 @@ var NavbarComponent = (function () {
         this.Auth = Auth;
     }
     NavbarComponent.prototype.ngOnInit = function () {
+    };
+    NavbarComponent.prototype.logout = function () {
+        this.Auth.deauthenticate();
     };
     return NavbarComponent;
 }());

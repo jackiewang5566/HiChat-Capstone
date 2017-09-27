@@ -6,9 +6,9 @@
             <ul id="nav-mobile" class="right">
               <div *ngIf="Auth.isUserAuthenticated(); else unAuthenticated">
                   <li>{{ Auth.getEmail() }}</li>  
-                  <li><a [routerLink]="['/logout']">Log out</a></li>
+                  <li><a [routerLink]="['/login']" (click)="logout()">Log out</a></li>
               </div>
-                 <!-- Auth.isUserAuthenticated() ?  -->
+                <!-- User is not login case  -->
               <ng-template #unAuthenticated>
                   <li><a [routerLink]="['/login']">Log in</a></li>    
                   <li><a [routerLink]="['/signup']">Sign up</a></li> 

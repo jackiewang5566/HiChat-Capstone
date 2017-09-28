@@ -13,6 +13,23 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 
 /***/ }),
 
+/***/ "../../../../../src/app/Models/error.model.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Error; });
+var Error = (function () {
+    function Error(title, message) {
+        this.title = title;
+        this.message = message;
+    }
+    return Error;
+}());
+
+//# sourceMappingURL=error.model.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/app.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -237,6 +254,7 @@ var LoginComponent = (function () {
     function LoginComponent(authService, router) {
         this.authService = authService;
         this.router = router;
+        this.errors = {};
     }
     LoginComponent.prototype.ngOnInit = function () {
         this.loginForm = new __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* FormGroup */]({
@@ -268,22 +286,14 @@ var LoginComponent = (function () {
             .subscribe(function (response) {
             console.log(response);
             if (response.status === 200) {
-                _this.errors = {};
                 _this.authService.authenticateUser(response.token, _this.loginForm.value.email);
-                // response.json().then(function (json) { // .json() method is an asychronous process
-                //     console.log(json);
-                //     this.authService.authenticateUser(json.token, this.loginForm.value.email,);
-                //     this.context.router.replace('/');
-                // }.bind(this));
             }
             else {
                 console.log('Login failed');
-                // response.json().then(function (json) {
-                //     const errors = json.errors ? json.errors: {};
-                //     this.errors.summary = json.message;
-                //     this.setState({ errors });
-                // }.bind(this));
+                console.log(response);
             }
+        }, function (error) {
+            _this.errors.summary = error.message;
         });
     };
     return LoginComponent;
@@ -525,6 +535,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var AuthService = (function () {
     function AuthService(http, errorService) {
         this.http = http;
@@ -556,6 +567,7 @@ var AuthService = (function () {
      * User login
      */
     AuthService.prototype.login = function (user) {
+        var _this = this;
         var body = JSON.stringify(user);
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Headers */]({
             'Content-Type': 'application/json'
@@ -565,8 +577,12 @@ var AuthService = (function () {
             .map(function (response) {
             var res = response.json();
             res.status = response.status;
-            console.log(res);
             return res;
+        })
+            .catch(function (error) {
+            console.log('auth error');
+            _this.errorService.handleError(error.json());
+            return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(error.json());
         });
         // .toPromise()
         // .then(function (res) {
@@ -622,6 +638,7 @@ var _a, _b;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Models_error_model__ = __webpack_require__("../../../../../src/app/Models/error.model.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ErrorService; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -633,14 +650,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var ErrorService = (function () {
     function ErrorService() {
         this.errorOccurred = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["F" /* EventEmitter */]();
     }
     ErrorService.prototype.handleError = function (error) {
         console.log(error);
-        // const errorData = new Error(error.title, error.error.message);
-        // this.errorOccurred.emit(errorData);
+        var errorData = new __WEBPACK_IMPORTED_MODULE_1__Models_error_model__["a" /* Error */](error.success, error.message);
+        this.errorOccurred.emit(errorData);
     };
     return ErrorService;
 }());

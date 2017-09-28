@@ -12,7 +12,7 @@ import { User } from 'app/models/user.model';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup
-  errors: any
+  errors: any = {};
 
   constructor(
     private authService: AuthService,
@@ -47,23 +47,13 @@ export class LoginComponent implements OnInit {
         .subscribe(response => {
           console.log(response);
             if (response.status === 200) {
-                this.errors = {};
-                
                 this.authService.authenticateUser(response.token, this.loginForm.value.email);
-                
-                // response.json().then(function (json) { // .json() method is an asychronous process
-                //     console.log(json);
-                //     this.authService.authenticateUser(json.token, this.loginForm.value.email,);
-                //     this.context.router.replace('/');
-                // }.bind(this));
             } else {
                 console.log('Login failed');
-                // response.json().then(function (json) {
-                //     const errors = json.errors ? json.errors: {};
-                //     this.errors.summary = json.message;
-                //     this.setState({ errors });
-                // }.bind(this));
+                console.log(response);
             }
+        }, error => {
+          this.errors.summary = error.message;
         });
   }
 }

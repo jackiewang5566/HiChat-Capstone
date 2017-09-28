@@ -79,7 +79,6 @@ router.post('/login', (req, res, next) => {
     })(req, res, next); 
 })
 
-
 function validateSignupForm(payload) {
     console.log(payload);
     const errors = {};

@@ -52,8 +52,12 @@ export class AuthService {
                         .map((response: Response) => { 
                             let res = response.json();
                             res.status = response.status;
-                            console.log(res);
                             return res;
+                        })
+                        .catch((error: Response) => {
+                            console.log('auth error');
+                            this.errorService.handleError(error.json())
+                            return Observable.throw(error.json());
                         })
                         // .toPromise()
                         // .then(function (res) {

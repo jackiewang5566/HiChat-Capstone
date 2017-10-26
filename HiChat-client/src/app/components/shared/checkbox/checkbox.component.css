@@ -1,0 +1,26 @@
+.styleBtn {
+    padding: 1px 3px;
+    font-size: 10px;
+    height: 18px;
+}
+
+.styleIcon {
+    width: 10px;
+    left: -1px;
+    font-size: 12px;
+    color: #008000;
+}
+
+.checkbox {
+    width: 10px;
+    height: 10px;
+}
+
+.fa.fa-check-square-o {
+    width: 10px;
+    height: 10px;
+}
+
+button {
+    border: 0px solid;
+}

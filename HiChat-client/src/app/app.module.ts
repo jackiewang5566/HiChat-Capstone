@@ -16,13 +16,17 @@ import { UsersService } from './services/users.service';
 
 // import routing
 import { routing } from 'app/app.routes';
+import { HomeComponent } from './components/home/home.component';
+import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    SignupComponent
+    SignupComponent,
+    HomeComponent,
+    CheckboxComponent
   ],
   imports: [
     BrowserModule,

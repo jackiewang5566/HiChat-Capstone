@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
           console.log(response);
             if (response.status === 200) {
                 this.authService.authenticateUser(response.token, this.loginForm.value.email);
+                this.router.navigate(['/home']);
             } else {
                 console.log('Login failed');
                 console.log(response);

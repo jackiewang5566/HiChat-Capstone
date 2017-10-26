@@ -1,0 +1,11 @@
+<div (click)="changeCheckbox()">
+    <label *ngIf="position === 'left'">{{ label }}</label>
+    <span 
+        class="fa"
+        [ngClass]="{'fa-check-square-o ': checked, 'fa-square-o': !checked, 'fa-lg': size === 'sm', 'fa-2x': size === 'md', 'fa-3x': size === 'lg'}"
+        aria-hidden="true">
+    </span>
+    <label *ngIf="position === 'right'">{{ label }}</label>
+</div>
+
+

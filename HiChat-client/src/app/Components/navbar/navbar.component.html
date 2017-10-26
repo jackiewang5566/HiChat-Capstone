@@ -5,6 +5,8 @@
             <a href="/" class="brand-logo">HiChat</a>
             <ul id="nav-mobile" class="right">
               <div *ngIf="Auth.isUserAuthenticated(); else unAuthenticated">
+                  <li><input type="text" placeholder="Search"></li>
+                  <li><a [routerLink]="['/profile']">Profile</a></li>
                   <li>{{ Auth.getEmail() }}</li>  
                   <li><a [routerLink]="['/login']" (click)="logout()">Log out</a></li>
               </div>

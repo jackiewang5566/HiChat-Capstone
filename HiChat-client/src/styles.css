@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+div .ngx-datatable {
+  font-size: 15px;
+  margin-bottom: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+div .ngx-datatable .datatable-header {
+  height: 30px;
+  vertical-align: middle;
+  display: table-header-group;
+  background-color: rgba(141, 192, 219, 0.25);
+  border: 1px solid #D8D8D8;
+}
+div .ngx-datatable datatable-header-cell {
+  padding: 0 15px;
+  border-right: 2px solid #D8D8D8;
+}
+div .ngx-datatable .datatable-body-row.datatable-row-odd {
+  background-color: #eff3fa;
+}
+div .ngx-datatable datatable-body-cell {
+  border: 1px solid #D8D8D8;
+  padding: 0 15px;
+}
+div .ngx-datatable datatable-pager ul.pager {
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: .25rem;
+}
+div .ngx-datatable datatable-pager li.pages {
+  display: list-item;
+  text-align: -webkit-match-parent;
+}
+div .ngx-datatable datatable-pager li.pages > a {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+div .ngx-datatable .page-count {
+  display: none;
+}

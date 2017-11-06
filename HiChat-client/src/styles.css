@@ -3,6 +3,7 @@ div .ngx-datatable {
   margin-bottom: 0;
   width: 100%;
   border-collapse: collapse;
+  overflow: visible !important;
 }
 div .ngx-datatable .datatable-header {
   height: 30px;
@@ -11,7 +12,7 @@ div .ngx-datatable .datatable-header {
   background-color: rgba(141, 192, 219, 0.25);
   border: 1px solid #D8D8D8;
 }
-div .ngx-datatable datatable-header-cell {
+div .ngx-datatable .datatable-header-cell {
   padding: 0 15px;
   border-right: 2px solid #D8D8D8;
 }
@@ -21,6 +22,7 @@ div .ngx-datatable .datatable-body-row.datatable-row-odd {
 div .ngx-datatable datatable-body-cell {
   border: 1px solid #D8D8D8;
   padding: 0 15px;
+  overflow: visible !important;
 }
 div .ngx-datatable datatable-pager ul.pager {
   display: flex;
@@ -44,4 +46,7 @@ div .ngx-datatable datatable-pager li.pages > a {
 }
 div .ngx-datatable .page-count {
   display: none;
+}
+div .ngx-datatable .activeRowClass {
+  background-color: #304FFE !important;
 }

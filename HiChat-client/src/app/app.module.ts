@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+// third party library
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 // import Components
@@ -20,6 +23,9 @@ import { routing } from 'app/app.routes';
 import { HomeComponent } from './components/home/home.component';
 import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 
+// import directive
+import { ClickOutsideDirective } from './components/shared/clickOutside.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,13 +33,15 @@ import { CheckboxComponent } from './components/shared/checkbox/checkbox.compone
     NavbarComponent,
     SignupComponent,
     HomeComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
+    NgbModule.forRoot(),
     NgxDatatableModule,
     routing
   ],

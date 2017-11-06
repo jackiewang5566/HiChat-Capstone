@@ -1,73 +1,94 @@
 <div class="container">
-  <input type="text" class="form-control" placeholder="Search for user to chat">
+  <input type="text" class="form-control mb-3" placeholder="Search for user to chat">
 
-  <div>
-      <ngx-datatable
-      #mydatatable
-      class="ngxDatatable"
-      (select)="selectRow($event)"
-      [selectionType]="'single'"
-      [headerHeight]="30"
-      [limit]="3"
-      [columnMode]="'force'"
-      [footerHeight]="30"
-      [rowHeight]="'auto'"
-      [rows]="rows">
-      <ngx-datatable-column name="Name"[cellClass]="'table-cell'">
-        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-          <span
-            title="Double click to edit"
-            (click)="editing[rowIndex + '-name'] = true"
-            *ngIf="!editing[rowIndex + '-name']">
-            {{value}}
-          </span>
-          <input
-            autofocus
-            (blur)="updateValue($event, 'name', rowIndex)"
-            *ngIf="editing[rowIndex+ '-name']"
-            type="text"
-            [value]="value"
-            class="form-control"
-          />
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Gender">
-        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-           <span
-            title="Double click to edit"
-            (click)="editing[rowIndex + '-gender'] = true"
-            *ngIf="!editing[rowIndex + '-gender']">
-            {{value}}
-          </span>
-          <select
-            *ngIf="editing[rowIndex + '-gender']"
-            (change)="updateValue($event, 'gender', rowIndex)"
-            [value]="value" class="form-control">
-            <option value="">Select your gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="Age">
-        <ng-template ngx-datatable-cell-template let-value="value">
-          {{value}}
-        </ng-template>
-      </ngx-datatable-column>
-
-      <!-- <ngx-datatable-footer>
-          <ng-template 
-            ngx-datatable-footer-template 
-            let-rowCount="rowCount"
-            let-pageSize="pageSize"
-            let-selectedCount="selectedCount"
-            let-curPage="curPage"
-            let-offset="offset">
-            <div class="pager">
-              
-            </div>
-          </ng-template>
-        </ngx-datatable-footer> -->
-    </ngx-datatable>
+  <div class="card bg-light">
+      <h3>Diagnosed Condition</h3>
+      {{ rows | json }}
+      <div class="mb-3 mt-3" style="z-index: 1;">
+          <ngx-datatable
+          #mydatatable
+          (select)="onSelect($event)"
+          [selectionType]="'single'"
+          [selected]="selected"
+          (activate)="onActivate($event)"
+          [headerHeight]="30"
+          [limit]="5"
+          [columnMode]="'force'"
+          [footerHeight]="30"
+          [rowHeight]="40"
+          [rowClass]="getRowClass"
+          [rows]="rows">
+          <ngx-datatable-column name="Condition Type">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <select
+                    *ngIf="!row.dummy"
+                    [(ngModel)]="row.conditionType"
+                    name="conditionType"
+                    class="form-control">
+                <option value="">Select Condition Type</option>
+                <option [ngValue]="row.conditionType">{{ row.conditionType }}</option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Condition">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <input 
+                  *ngIf="!row.dummy"
+                  type="text" 
+                  class="form-control"
+                  name="condition"
+                  [(ngModel)]="row.condition">
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Date of Diagnosis">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <div class="form-inline" *ngIf="!row.dummy">
+                    <div class="form-group" #container>
+                      <div class="input-group" (click)="d.toggle(); openDatepicker(d)">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               name="dp" [(ngModel)]="row.dateOfDiagnosis" ngbDatepicker #d="ngbDatepicker">
+                        <button class="input-group-addon" type="button">
+                          <i class="fa fa-calendar" aria-hidden="true" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </ng-template>
+          </ngx-datatable-column>
+    
+          <!-- <ngx-datatable-footer>
+              <ng-template 
+                ngx-datatable-footer-template 
+                let-rowCount="rowCount"
+                let-pageSize="pageSize"
+                let-selectedCount="selectedCount"
+                let-curPage="curPage"
+                let-offset="offset">
+                <div class="pager">
+                  
+                </div>
+              </ng-template>
+            </ngx-datatable-footer> -->
+        </ngx-datatable>
+      </div>
+      <div class="row form-group mx-0">
+          <div class="col-md-3 mt-2">
+            <checkbox [size]="'sm'" [label]="'No Medical Condition'" [position]="'right'" [(check)]="noMedicalConditionFlag" (checkChange)="noMedicalCondition(noMedicalConditionFlag)"></checkbox>
+          </div>
+          <div class="col-md-4 offset-md-5" style="z-index: 0;">
+            <button class="btn btn-primary" (click)="addRow()">
+              Add Condition
+            </button>
+            <button class="btn btn-secondary" (click)="removeRow()">
+              Remove Condition
+            </button>
+          </div>
+      </div>
   </div>
+
+  <div class="col-12 mt-3">
+      <div class="card bg-secondary">
+        <h5>Test</h5>
+      </div>
+    </div>
 </div>

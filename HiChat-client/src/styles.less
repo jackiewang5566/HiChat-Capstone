@@ -3,6 +3,7 @@ div .ngx-datatable {
     margin-bottom: 0;
     width: 100%;
     border-collapse: collapse;
+    overflow: visible !important;
     
     .datatable-header {
         height: 30px;
@@ -12,7 +13,7 @@ div .ngx-datatable {
         border: 1px solid #D8D8D8;
     }
 
-    datatable-header-cell {
+    .datatable-header-cell {
         padding: 0 15px;
         border-right: 2px solid #D8D8D8;
     }
@@ -24,6 +25,7 @@ div .ngx-datatable {
     datatable-body-cell {
         border: 1px solid #D8D8D8;
         padding: 0 15px;
+        overflow: visible !important;
     }
 
     datatable-pager {
@@ -55,6 +57,7 @@ div .ngx-datatable {
         display: none;
     }
 
+    .activeRowClass {
+        background-color: #304FFE !important;
+    }
 }
-
-

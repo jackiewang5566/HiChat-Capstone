@@ -1,56 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  host: {
+    '(document: click)': 'closeDatepicker($event)'
+  }
 })
 export class HomeComponent implements OnInit {
-  editing = {};
+  @ViewChild('container') container;
+  @ViewChild('input[ngbDatepicker]') datePicker;
+
+  dynamicId;
+
+  noMedicalConditionFlag: boolean = false;
   rows = [
     {
-        "name": "Ethel Price",
-        "gender": "female",
-        "company": "Johnson, Johnson and Partners, LLC CMP DDC",
-        "age": 22
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     },
     {
-        "name": "Claudine Neal",
-        "gender": "female",
-        "company": "Sealoud",
-        "age": 55
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     },
     {
-        "name": "Beryl Rice",
-        "gender": "female",
-        "company": "Velity",
-        "age": 67
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     },
     {
-        "name": "Wilder Gonzales",
-        "gender": "male",
-        "company": "Geekko"
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     },
     {
-        "name": "Georgina Schultz",
-        "gender": "female",
-        "company": "Suretech"
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     }
-    
   ];
+  dummyRows;
 
-  constructor() { 
+  selected = [];
+
+  constructor(private _eref: ElementRef) {
+    this.dummyRows = this.rows;
   }
 
   ngOnInit() {
-  }
-
-  updateValue(event, cell, rowIndex) {
-    console.log('inline editing rowIndex', rowIndex)
-    this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
-    console.log('UPDATED!', this.rows[rowIndex][cell]);
   }
 
   getCellClass({ row, column, value }): any {
@@ -59,17 +69,93 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  selectRow(row) {
+  getRowClass(row) {
     console.log(row);
+    return {
+      'activeRowClass': row.active
+    }
+  }
+
+  prevSelected;
+  onSelect({ selected }) {
+    console.log('Select Event', selected, this.selected);
+    if (this.prevSelected) {
+      this.prevSelected[0].active = false;
+    }
+    
+    selected[0].active = true;
+    this.prevSelected = selected;
+  }
+
+  onActivate(event) {
+    // console.log('Activate Event', event);
   }
 
   addRow() {
-    const newRow = {
-      "name": "Neal Wang",
-      "gender": "male",
-      "company": "Google",
-      "age": 27
+    let newRow = {
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": false,
+      "active": false
     };
+    // if (this.rows[0].dummy) {
+    //   this.rows.splice(0, 1, newRow);
+    // } else {
+    //   this.rows.splice(0, 0, newRow);
+    // }
+    for (let i in this.rows) {
+      if (this.rows[i].dummy) {
+        this.rows.splice(+i, 1, newRow);
+        break;
+      }
+    }
+  }
 
+  removeRow(index) {
+    let dummyRow = {
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
+    };
+    if (this.rows.length < 6) {
+      this.rows.splice(index, 1, dummyRow);
+      this.rows.sort(this.compareFunction);
+    } else {
+      this.rows.splice(index, 1);
+    }
+  }
+
+  compareFunction(a, b) {
+    return a.dummy ? b : a;
+  }
+
+  noMedicalCondition(noMedicalConditionFlag) {
+    if (noMedicalConditionFlag) {
+      this.rows = this.dummyRows;
+    }
+  }
+
+  openDatepicker(id) {
+    this.dynamicId = id;
+    console.log(this.dynamicId);
+  }
+
+  closeFlag: boolean = false;
+  closeDatepicker(event) {
+    // if (!this.container.nativeElement.contains(event.target) && this.datePicker) { // check click origin
+    //   this.datePicker.close();
+    // }
+
+    // if(this._eref.nativeElement.querySelector('ngb-datepicker') && (!this._eref.nativeElement.querySelector('ngb-datepicker').contains(event.target)
+    // && !this._eref.nativeElement.querySelector('.input-group-addon').contains(event.target) && this.closeFlag)) {
+    //   let self = this;
+    //   setTimeout(function(){
+    //     self.dynamicId.close();
+    //     self.closeFlag = true;
+    //   },10);
+    // }
   }
 }

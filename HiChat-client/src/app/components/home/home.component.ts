@@ -50,6 +50,13 @@ export class HomeComponent implements OnInit {
       "dateOfDiagnosis": "",
       "dummy": true,
       "active": false
+    },
+    {
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false
     }
   ];
   dummyRows;
@@ -70,7 +77,6 @@ export class HomeComponent implements OnInit {
   }
 
   getRowClass(row) {
-    console.log(row);
     return {
       'activeRowClass': row.active
     }
@@ -78,13 +84,16 @@ export class HomeComponent implements OnInit {
 
   prevSelected;
   onSelect({ selected }) {
-    console.log('Select Event', selected, this.selected);
-    if (this.prevSelected) {
-      this.prevSelected[0].active = false;
+    // console.log('Select Event', selected, this.selected);
+    console.log(selected);
+    if (!selected[0].dummy) {
+      if (this.prevSelected) {
+        this.prevSelected[0].active = false;
+      }
+      
+      selected[0].active = true;
+      this.prevSelected = selected;
     }
-    
-    selected[0].active = true;
-    this.prevSelected = selected;
   }
 
   onActivate(event) {
@@ -97,22 +106,25 @@ export class HomeComponent implements OnInit {
       "condition": "",
       "dateOfDiagnosis": "",
       "dummy": false,
-      "active": false
+      "active": true
     };
-    // if (this.rows[0].dummy) {
-    //   this.rows.splice(0, 1, newRow);
-    // } else {
-    //   this.rows.splice(0, 0, newRow);
-    // }
+    
     for (let i in this.rows) {
       if (this.rows[i].dummy) {
+        // add newRow to rows
         this.rows.splice(+i, 1, newRow);
+        const newSelectedObj: any = {
+          selected: {
+            "0": newRow
+          }
+        };
+        this.onSelect(newSelectedObj);
         break;
       }
     }
   }
 
-  removeRow(index) {
+  removeRow() {
     let dummyRow = {
       "conditionType": "",
       "condition": "",
@@ -120,11 +132,17 @@ export class HomeComponent implements OnInit {
       "dummy": true,
       "active": false
     };
-    if (this.rows.length < 6) {
-      this.rows.splice(index, 1, dummyRow);
-      this.rows.sort(this.compareFunction);
-    } else {
-      this.rows.splice(index, 1);
+    console.log(this.selected);
+    // if (this.rows.length < 6) {
+    //   this.rows.splice(index, 1, dummyRow);
+    //   this.rows.sort(this.compareFunction);
+    // } else {
+    //   this.rows.splice(index, 1);
+    // }
+    for (let i in this.rows) {
+      if (JSON.stringify(this.rows[i]) === JSON.stringify(this.selected[0])) {
+        this.rows.splice(+i, 1);
+      }
     }
   }
 

@@ -4,6 +4,7 @@
   <div class="card bg-light">
       <h3>Diagnosed Condition</h3>
       {{ rows | json }}
+      {{ rows.length }}
       <div class="mb-3 mt-3" style="z-index: 1;">
           <ngx-datatable
           #mydatatable
@@ -12,7 +13,7 @@
           [selected]="selected"
           (activate)="onActivate($event)"
           [headerHeight]="30"
-          [limit]="5"
+          [limit]="6"
           [columnMode]="'force'"
           [footerHeight]="30"
           [rowHeight]="40"

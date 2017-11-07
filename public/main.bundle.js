@@ -250,7 +250,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <input type=\"text\" class=\"form-control mb-3\" placeholder=\"Search for user to chat\">\n\n  <div class=\"card bg-light\">\n      <h3>Diagnosed Condition</h3>\n      {{ rows | json }}\n      <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n          <ngx-datatable\n          #mydatatable\n          (select)=\"onSelect($event)\"\n          [selectionType]=\"'single'\"\n          [selected]=\"selected\"\n          (activate)=\"onActivate($event)\"\n          [headerHeight]=\"30\"\n          [limit]=\"5\"\n          [columnMode]=\"'force'\"\n          [footerHeight]=\"30\"\n          [rowHeight]=\"40\"\n          [rowClass]=\"getRowClass\"\n          [rows]=\"rows\">\n          <ngx-datatable-column name=\"Condition Type\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                    *ngIf=\"!row.dummy\"\n                    [(ngModel)]=\"row.conditionType\"\n                    name=\"conditionType\"\n                    class=\"form-control\">\n                <option value=\"\">Select Condition Type</option>\n                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n              </select>\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Condition\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n              <input \n                  *ngIf=\"!row.dummy\"\n                  type=\"text\" \n                  class=\"form-control\"\n                  name=\"condition\"\n                  [(ngModel)]=\"row.condition\">\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Date of Diagnosis\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                    <div class=\"form-group\" #container>\n                      <div class=\"input-group\" (click)=\"d.toggle(); openDatepicker(d)\">\n                        <input class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n                               name=\"dp\" [(ngModel)]=\"row.dateOfDiagnosis\" ngbDatepicker #d=\"ngbDatepicker\">\n                        <button class=\"input-group-addon\" type=\"button\">\n                          <i class=\"fa fa-calendar\" aria-hidden=\"true\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"></i>\n                        </button>\n                      </div>\n                    </div>\n                </div>\n            </ng-template>\n          </ngx-datatable-column>\n    \n          <!-- <ngx-datatable-footer>\n              <ng-template \n                ngx-datatable-footer-template \n                let-rowCount=\"rowCount\"\n                let-pageSize=\"pageSize\"\n                let-selectedCount=\"selectedCount\"\n                let-curPage=\"curPage\"\n                let-offset=\"offset\">\n                <div class=\"pager\">\n                  \n                </div>\n              </ng-template>\n            </ngx-datatable-footer> -->\n        </ngx-datatable>\n      </div>\n      <div class=\"row form-group mx-0\">\n          <div class=\"col-md-3 mt-2\">\n            <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n          </div>\n          <div class=\"col-md-4 offset-md-5\" style=\"z-index: 0;\">\n            <button class=\"btn btn-primary\" (click)=\"addRow()\">\n              Add Condition\n            </button>\n            <button class=\"btn btn-secondary\" (click)=\"removeRow()\">\n              Remove Condition\n            </button>\n          </div>\n      </div>\n  </div>\n\n  <div class=\"col-12 mt-3\">\n      <div class=\"card bg-secondary\">\n        <h5>Test</h5>\n      </div>\n    </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <input type=\"text\" class=\"form-control mb-3\" placeholder=\"Search for user to chat\">\n\n  <div class=\"card bg-light\">\n      <h3>Diagnosed Condition</h3>\n      {{ rows | json }}\n      {{ rows.length }}\n      <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n          <ngx-datatable\n          #mydatatable\n          (select)=\"onSelect($event)\"\n          [selectionType]=\"'single'\"\n          [selected]=\"selected\"\n          (activate)=\"onActivate($event)\"\n          [headerHeight]=\"30\"\n          [limit]=\"6\"\n          [columnMode]=\"'force'\"\n          [footerHeight]=\"30\"\n          [rowHeight]=\"40\"\n          [rowClass]=\"getRowClass\"\n          [rows]=\"rows\">\n          <ngx-datatable-column name=\"Condition Type\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                    *ngIf=\"!row.dummy\"\n                    [(ngModel)]=\"row.conditionType\"\n                    name=\"conditionType\"\n                    class=\"form-control\">\n                <option value=\"\">Select Condition Type</option>\n                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n              </select>\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Condition\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n              <input \n                  *ngIf=\"!row.dummy\"\n                  type=\"text\" \n                  class=\"form-control\"\n                  name=\"condition\"\n                  [(ngModel)]=\"row.condition\">\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Date of Diagnosis\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                    <div class=\"form-group\" #container>\n                      <div class=\"input-group\" (click)=\"d.toggle(); openDatepicker(d)\">\n                        <input class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n                               name=\"dp\" [(ngModel)]=\"row.dateOfDiagnosis\" ngbDatepicker #d=\"ngbDatepicker\">\n                        <button class=\"input-group-addon\" type=\"button\">\n                          <i class=\"fa fa-calendar\" aria-hidden=\"true\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"></i>\n                        </button>\n                      </div>\n                    </div>\n                </div>\n            </ng-template>\n          </ngx-datatable-column>\n    \n          <!-- <ngx-datatable-footer>\n              <ng-template \n                ngx-datatable-footer-template \n                let-rowCount=\"rowCount\"\n                let-pageSize=\"pageSize\"\n                let-selectedCount=\"selectedCount\"\n                let-curPage=\"curPage\"\n                let-offset=\"offset\">\n                <div class=\"pager\">\n                  \n                </div>\n              </ng-template>\n            </ngx-datatable-footer> -->\n        </ngx-datatable>\n      </div>\n      <div class=\"row form-group mx-0\">\n          <div class=\"col-md-3 mt-2\">\n            <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n          </div>\n          <div class=\"col-md-4 offset-md-5\" style=\"z-index: 0;\">\n            <button class=\"btn btn-primary\" (click)=\"addRow()\">\n              Add Condition\n            </button>\n            <button class=\"btn btn-secondary\" (click)=\"removeRow()\">\n              Remove Condition\n            </button>\n          </div>\n      </div>\n  </div>\n\n  <div class=\"col-12 mt-3\">\n      <div class=\"card bg-secondary\">\n        <h5>Test</h5>\n      </div>\n    </div>\n</div>"
 
 /***/ }),
 
@@ -309,6 +309,13 @@ var HomeComponent = /** @class */ (function () {
                 "dateOfDiagnosis": "",
                 "dummy": true,
                 "active": false
+            },
+            {
+                "conditionType": "",
+                "condition": "",
+                "dateOfDiagnosis": "",
+                "dummy": true,
+                "active": false
             }
         ];
         this.selected = [];
@@ -324,19 +331,21 @@ var HomeComponent = /** @class */ (function () {
         };
     };
     HomeComponent.prototype.getRowClass = function (row) {
-        console.log(row);
         return {
             'activeRowClass': row.active
         };
     };
     HomeComponent.prototype.onSelect = function (_a) {
         var selected = _a.selected;
-        console.log('Select Event', selected, this.selected);
-        if (this.prevSelected) {
-            this.prevSelected[0].active = false;
+        // console.log('Select Event', selected, this.selected);
+        console.log(selected);
+        if (!selected[0].dummy) {
+            if (this.prevSelected) {
+                this.prevSelected[0].active = false;
+            }
+            selected[0].active = true;
+            this.prevSelected = selected;
         }
-        selected[0].active = true;
-        this.prevSelected = selected;
     };
     HomeComponent.prototype.onActivate = function (event) {
         // console.log('Activate Event', event);
@@ -347,21 +356,23 @@ var HomeComponent = /** @class */ (function () {
             "condition": "",
             "dateOfDiagnosis": "",
             "dummy": false,
-            "active": false
+            "active": true
         };
-        // if (this.rows[0].dummy) {
-        //   this.rows.splice(0, 1, newRow);
-        // } else {
-        //   this.rows.splice(0, 0, newRow);
-        // }
         for (var i in this.rows) {
             if (this.rows[i].dummy) {
+                // add newRow to rows
                 this.rows.splice(+i, 1, newRow);
+                var newSelectedObj = {
+                    selected: {
+                        "0": newRow
+                    }
+                };
+                this.onSelect(newSelectedObj);
                 break;
             }
         }
     };
-    HomeComponent.prototype.removeRow = function (index) {
+    HomeComponent.prototype.removeRow = function () {
         var dummyRow = {
             "conditionType": "",
             "condition": "",
@@ -369,12 +380,17 @@ var HomeComponent = /** @class */ (function () {
             "dummy": true,
             "active": false
         };
-        if (this.rows.length < 6) {
-            this.rows.splice(index, 1, dummyRow);
-            this.rows.sort(this.compareFunction);
-        }
-        else {
-            this.rows.splice(index, 1);
+        console.log(this.selected);
+        // if (this.rows.length < 6) {
+        //   this.rows.splice(index, 1, dummyRow);
+        //   this.rows.sort(this.compareFunction);
+        // } else {
+        //   this.rows.splice(index, 1);
+        // }
+        for (var i in this.rows) {
+            if (JSON.stringify(this.rows[i]) === JSON.stringify(this.selected[0])) {
+                this.rows.splice(+i, 1);
+            }
         }
     };
     HomeComponent.prototype.compareFunction = function (a, b) {

@@ -67,12 +67,7 @@ export class HomeComponent implements OnInit {
 
   selected = [];
 
-<<<<<<< HEAD
   tableFixedRowSize: number = 6
-=======
-
-  readonly pageLimit = 6;
->>>>>>> 92385b04d600d697fad72b80dd1c830434a56a2d
 
   constructor(private el: ElementRef) {
     this.dummyRows = this.rows;
@@ -100,7 +95,7 @@ export class HomeComponent implements OnInit {
   onSelect({ selected }) {
     // console.log('Select Event', selected, this.selected);
     console.log(selected);
-    if (!selected[0].dummy) {
+    if (selected && !selected[0].dummy) {
       if (this.prevSelected) {
         this.prevSelected[0].active = false;
       }

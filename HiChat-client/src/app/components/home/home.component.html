@@ -11,14 +11,14 @@
           (select)="onSelect($event)"
           [selectionType]="'single'"
           [selected]="selected"
-          (activate)="onActivate($event)"
           [headerHeight]="30"
-          [limit]="6"
           [columnMode]="'force'"
           [footerHeight]="30"
           [rowHeight]="40"
           [rowClass]="getRowClass"
-          [rows]="rows">
+          [rows]="rows"
+          [messages]="{'emptyMessage': 'Please add conditions'}"
+          >
           <ngx-datatable-column name="Condition Type">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                 <select
@@ -56,27 +56,13 @@
                 </div>
             </ng-template>
           </ngx-datatable-column>
-    
-          <!-- <ngx-datatable-footer>
-              <ng-template 
-                ngx-datatable-footer-template 
-                let-rowCount="rowCount"
-                let-pageSize="pageSize"
-                let-selectedCount="selectedCount"
-                let-curPage="curPage"
-                let-offset="offset">
-                <div class="pager">
-                  
-                </div>
-              </ng-template>
-            </ngx-datatable-footer> -->
         </ngx-datatable>
       </div>
       <div class="row form-group mx-0">
           <div class="col-md-3 mt-2">
             <checkbox [size]="'sm'" [label]="'No Medical Condition'" [position]="'right'" [(check)]="noMedicalConditionFlag" (checkChange)="noMedicalCondition(noMedicalConditionFlag)"></checkbox>
           </div>
-          <div class="col-md-4 offset-md-5" style="z-index: 0;">
+          <div class="col-md-4 offset-md-5">
             <button class="btn btn-primary" (click)="addRow()">
               Add Condition
             </button>

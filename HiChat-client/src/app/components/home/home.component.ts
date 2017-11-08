@@ -67,7 +67,12 @@ export class HomeComponent implements OnInit {
 
   selected = [];
 
+<<<<<<< HEAD
   tableFixedRowSize: number = 6
+=======
+
+  readonly pageLimit = 6;
+>>>>>>> 92385b04d600d697fad72b80dd1c830434a56a2d
 
   constructor(private el: ElementRef) {
     this.dummyRows = this.rows;

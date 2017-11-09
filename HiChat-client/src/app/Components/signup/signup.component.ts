@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from 'app/services/auth.service';
 import { User } from 'app/models/user.model';
-import { validateEqualValidator } from 'app/shared/equal-validator.directive';
+import { validateEqualValidator } from 'app/components/shared/equal-validator.directive';
 
 @Component({
   selector: 'app-signup',

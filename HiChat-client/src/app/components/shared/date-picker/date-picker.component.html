@@ -1,0 +1,33 @@
+<form class="form-inline">       
+    <div class="input-group">
+        <input class="form-control" placeholder="mm/dd/yyyy"
+            name="dp" id="dp" #dp="ngModel" 
+            [required]="require"
+            [maxDate]="maxDate" 
+            [(ngModel)]="dates" 
+            ngbDatepicker 
+            #d="ngbDatepicker"  
+        (ngModelChange)="onDateChanged($event)"
+        >
+        <button class="input-group-addon" (click)="d.toggle()" type="button">
+        <i class="fa fa-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></i>
+        </button>
+    </div>
+    <div *ngIf="dp.invalid && (dp.dirty || dp.touched)"
+        class="p-1">
+        <div class="form-control-feedback" *ngIf="dp.errors.required">
+            Date is required.
+          </div>
+          <div class="form-control-feedback" *ngIf="dp.errors.ngbDate&&dp.errors.ngbDate.invalid">
+            format is not correct.
+          </div>
+       
+          <div class="form-control-feedback" *ngIf="dp.errors.ngbDate&&dp.errors.ngbDate.requiredAfte">
+            Future date is not allowed
+          </div>
+        
+    </div>
+                
+</form>
+      
+

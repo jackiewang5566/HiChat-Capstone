@@ -250,7 +250,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <input type=\"text\" class=\"form-control mb-3\" placeholder=\"Search for user to chat\">\n\n  <div class=\"card bg-light\">\n      <h3>Diagnosed Condition</h3>\n      {{ rows | json }}\n      {{ rows.length }}\n      <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n          <ngx-datatable\n          #mydatatable\n          (select)=\"onSelect($event)\"\n          [selectionType]=\"'single'\"\n          [selected]=\"selected\"\n          [headerHeight]=\"30\"\n          [columnMode]=\"'force'\"\n          [footerHeight]=\"30\"\n          [rowHeight]=\"40\"\n          [rowClass]=\"getRowClass\"\n          [rows]=\"rows\"\n          [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n          >\n          <ngx-datatable-column name=\"Condition Type\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                    *ngIf=\"!row.dummy\"\n                    [(ngModel)]=\"row.conditionType\"\n                    name=\"conditionType\"\n                    class=\"form-control\">\n                <option value=\"\">Select Condition Type</option>\n                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n              </select>\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Condition\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n              <input \n                  *ngIf=\"!row.dummy\"\n                  type=\"text\" \n                  class=\"form-control\"\n                  name=\"condition\"\n                  [(ngModel)]=\"row.condition\">\n            </ng-template>\n          </ngx-datatable-column>\n          <ngx-datatable-column name=\"Date of Diagnosis\">\n            <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                    <div class=\"form-group\" #container>\n                      <div class=\"input-group\" (click)=\"d.toggle()\">\n                        <input class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n                               name=\"dp\" [(ngModel)]=\"row.dateOfDiagnosis\" ngbDatepicker #d=\"ngbDatepicker\">\n                        <button class=\"input-group-addon\" type=\"button\">\n                          <i class=\"fa fa-calendar\" aria-hidden=\"true\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"></i>\n                        </button>\n                      </div>\n                    </div>\n                </div>\n            </ng-template>\n          </ngx-datatable-column>\n        </ngx-datatable>\n      </div>\n      <div class=\"row form-group mx-0\">\n          <div class=\"col-md-3 mt-2\">\n            <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n          </div>\n          <div class=\"col-md-4 offset-md-5\">\n            <button class=\"btn btn-primary\" (click)=\"addRow()\">\n              Add Condition\n            </button>\n            <button class=\"btn btn-secondary\" (click)=\"removeRow()\">\n              Remove Condition\n            </button>\n          </div>\n      </div>\n  </div>\n\n  <div class=\"col-12 mt-3\">\n      <div class=\"card bg-secondary\">\n        <h5>Test</h5>\n      </div>\n    </div>\n</div>"
+module.exports = "<div class=\"container-fluid\">\n  <form action=\"\">\n      <input type=\"text\" class=\"form-control mb-3\" placeholder=\"Search for user to chat\">\n      \n        <div class=\"card bg-light\">\n            <h3>Diagnosed Condition</h3>\n            {{ rows | json }}\n            {{ rows.length }}\n            <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n                <ngx-datatable\n                #mydatatable\n                (select)=\"onSelect($event)\"\n                [selectionType]=\"'single'\"\n                [selected]=\"selected\"\n                [headerHeight]=\"30\"\n                [columnMode]=\"'force'\"\n                [footerHeight]=\"30\"\n                [rowHeight]=\"40\"\n                [rowClass]=\"getRowClass\"\n                [rows]=\"rows\"\n                [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n                >\n                <ngx-datatable-column name=\"Condition Type\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                      <select\n                          *ngIf=\"!row.dummy\"\n                          [(ngModel)]=\"row.conditionType\"\n                          name=\"conditionType\"\n                          class=\"form-control\">\n                      <option value=\"\">Select Condition Type</option>\n                      <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                    </select>\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Condition\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                    <input \n                        *ngIf=\"!row.dummy\"\n                        type=\"text\" \n                        class=\"form-control\"\n                        name=\"condition\"\n                        [(ngModel)]=\"row.condition\">\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Date of Diagnosis\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                      <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                          <div class=\"form-group\" #container>\n                            <div class=\"input-group\" (click)=\"d.toggle()\">\n                              <input class=\"form-control\" placeholder=\"yyyy-mm-dd\"\n                                     name=\"dp\" [(ngModel)]=\"row.dateOfDiagnosis\" ngbDatepicker #d=\"ngbDatepicker\">\n                              <button class=\"input-group-addon\" type=\"button\">\n                                <i class=\"fa fa-calendar\" aria-hidden=\"true\" style=\"width: 1.2rem; height: 1rem; cursor: pointer;\"></i>\n                              </button>\n                            </div>\n                          </div>\n                      </div>\n                  </ng-template>\n                </ngx-datatable-column>\n              </ngx-datatable>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button class=\"btn btn-primary\" (click)=\"addRow()\" type=\"button\">\n                    Add Condition\n                  </button>\n                  <button class=\"btn btn-secondary\" (click)=\"removeRow()\" type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n  </form>\n\n</div>"
 
 /***/ }),
 
@@ -763,6 +763,26 @@ var ClickOutsideDirective = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "../../../../../src/app/components/shared/equal-validator.directive.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = validateEqualValidator;
+function validateEqualValidator(password_key, confirm_password_key) {
+    return function (group) {
+        var password = group.controls[password_key];
+        var confirm_password = group.controls[confirm_password_key];
+        if (password.value !== confirm_password.value) {
+            return {
+                mismatchedPasswords: true
+            };
+        }
+    };
+}
+//# sourceMappingURL=equal-validator.directive.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/components/signup/signup.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -797,7 +817,7 @@ module.exports = "<div class=\"container\">\n    <div class=\"card-panel login-p
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_app_services_auth_service__ = __webpack_require__("../../../../../src/app/services/auth.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_app_models_user_model__ = __webpack_require__("../../../../../src/app/models/user.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_app_shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/shared/equal-validator.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_app_components_shared_equal_validator_directive__ = __webpack_require__("../../../../../src/app/components/shared/equal-validator.directive.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -828,7 +848,7 @@ var SignupComponent = /** @class */ (function () {
             ]),
             password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required],
             confirm_password: [null, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["f" /* Validators */].required]
-        }, { validator: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_app_shared_equal_validator_directive__["a" /* validateEqualValidator */])('password', 'confirm_password') });
+        }, { validator: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_5_app_components_shared_equal_validator_directive__["a" /* validateEqualValidator */])('password', 'confirm_password') });
     };
     Object.defineProperty(SignupComponent.prototype, "email", {
         get: function () {
@@ -1088,26 +1108,6 @@ var UsersService = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=users.service.js.map
-
-/***/ }),
-
-/***/ "../../../../../src/app/shared/equal-validator.directive.ts":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = validateEqualValidator;
-function validateEqualValidator(password_key, confirm_password_key) {
-    return function (group) {
-        var password = group.controls[password_key];
-        var confirm_password = group.controls[confirm_password_key];
-        if (password.value !== confirm_password.value) {
-            return {
-                mismatchedPasswords: true
-            };
-        }
-    };
-}
-//# sourceMappingURL=equal-validator.directive.js.map
 
 /***/ }),
 

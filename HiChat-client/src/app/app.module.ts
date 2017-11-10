@@ -21,10 +21,11 @@ import { UsersService } from './services/users.service';
 // import routing
 import { routing } from 'app/app.routes';
 import { HomeComponent } from './components/home/home.component';
-import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 
-// import directive
+// import shared
+import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 import { ClickOutsideDirective } from './components/shared/clickOutside.directive';
+import { DatePickerComponent } from './components/shared/date-picker/date-picker.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ClickOutsideDirective } from './components/shared/clickOutside.directiv
     SignupComponent,
     HomeComponent,
     CheckboxComponent,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    DatePickerComponent
   ],
   imports: [
     BrowserModule,

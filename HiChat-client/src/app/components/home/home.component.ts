@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
+import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,10 @@ export class HomeComponent implements OnInit {
   @ViewChild('container') container;
   @ViewChild('input[ngbDatepicker]') datePicker;
 
+  ee1Form: FormGroup;
+
   dynamicId;
+  testDate;
 
   noMedicalConditionFlag: boolean = false;
   rows = [
@@ -69,15 +74,17 @@ export class HomeComponent implements OnInit {
 
   tableFixedRowSize: number = 6
 
-  constructor(private el: ElementRef) {
+  constructor(private el: ElementRef, private fb: FormBuilder) {
     this.dummyRows = this.rows;
+    this.ee1Form = fb.group({
+        'searchUser': ['Neal', Validators.required],
+        'testDatepicker': [null]
+    })
   }
 
   ngOnInit() {
     
   }
-
-  
 
   getCellClass({ row, column, value }): any {
     return {
@@ -86,16 +93,21 @@ export class HomeComponent implements OnInit {
   }
 
   getRowClass(row) {
+    console.log('rowClass');
     return {
       'activeRowClass': row.active
     }
   }
 
+  checkSelectedRow(row, column, value) {
+    console.log(row);
+    return !row.dummy
+  }
+
   prevSelected;
   onSelect({ selected }) {
     // console.log('Select Event', selected, this.selected);
-    console.log(selected);
-    if (selected && !selected[0].dummy) {
+    if (selected && selected[0] && !selected[0].dummy) {
       if (this.prevSelected) {
         this.prevSelected[0].active = false;
       }
@@ -103,10 +115,6 @@ export class HomeComponent implements OnInit {
       selected[0].active = true;
       this.prevSelected = selected;
     }
-  }
-
-  onActivate(event) {
-    // console.log('Activate Event', event);
   }
 
   addRow() {
@@ -118,6 +126,7 @@ export class HomeComponent implements OnInit {
       "active": true,
       "index": 0
     };
+    
     const newSelectedObj: any = {
       selected: {
         "0": newRow
@@ -131,6 +140,7 @@ export class HomeComponent implements OnInit {
         newRow.index = i;
         // add newRow to rows
         this.rows.splice(i, 1, newRow);
+        // this.checkSelectedRow(newRow, null, null);
         this.onSelect(newSelectedObj);
         break;
       }
@@ -175,6 +185,10 @@ export class HomeComponent implements OnInit {
     if (noMedicalConditionFlag) {
       this.rows = this.dummyRows;
     }
+  }
+
+  onSubmit() {
+    console.log(this.ee1Form);
   }
 
   // openDatepicker(id) {

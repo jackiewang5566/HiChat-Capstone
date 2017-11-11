@@ -115,9 +115,10 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_users_service__ = __webpack_require__("../../../../../src/app/services/users.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_app_app_routes__ = __webpack_require__("../../../../../src/app/app.routes.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__ = __webpack_require__("../../../../../src/app/components/home/home.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_shared_checkbox_checkbox_component__ = __webpack_require__("../../../../../src/app/components/shared/checkbox/checkbox.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_shared_clickOutside_directive__ = __webpack_require__("../../../../../src/app/components/shared/clickOutside.directive.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_shared_date_picker_date_picker_component__ = __webpack_require__("../../../../../src/app/components/shared/date-picker/date-picker.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_shared_btn_group_btn_group_component__ = __webpack_require__("../../../../../src/app/components/shared/btn-group/btn-group.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_shared_checkbox_checkbox_component__ = __webpack_require__("../../../../../src/app/components/shared/checkbox/checkbox.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_shared_clickOutside_directive__ = __webpack_require__("../../../../../src/app/components/shared/clickOutside.directive.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_shared_date_picker_date_picker_component__ = __webpack_require__("../../../../../src/app/components/shared/date-picker/date-picker.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -148,6 +149,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -159,9 +161,10 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_8__components_navbar_navbar_component__["a" /* NavbarComponent */],
                 __WEBPACK_IMPORTED_MODULE_9__components_signup_signup_component__["a" /* SignupComponent */],
                 __WEBPACK_IMPORTED_MODULE_14__components_home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_15__components_shared_checkbox_checkbox_component__["a" /* CheckboxComponent */],
-                __WEBPACK_IMPORTED_MODULE_16__components_shared_clickOutside_directive__["a" /* ClickOutsideDirective */],
-                __WEBPACK_IMPORTED_MODULE_17__components_shared_date_picker_date_picker_component__["a" /* DatePickerComponent */]
+                __WEBPACK_IMPORTED_MODULE_16__components_shared_checkbox_checkbox_component__["a" /* CheckboxComponent */],
+                __WEBPACK_IMPORTED_MODULE_17__components_shared_clickOutside_directive__["a" /* ClickOutsideDirective */],
+                __WEBPACK_IMPORTED_MODULE_18__components_shared_date_picker_date_picker_component__["a" /* DatePickerComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__components_shared_btn_group_btn_group_component__["a" /* BtnGroupComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["BrowserModule"],
@@ -253,7 +256,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<form class=\"container\" [formGroup]=\"ee1Form\" (ngSubmit)=\"submitForm()\">\n    <input \n      type=\"text\" \n      class=\"form-control\" \n      placeholder=\"Search for user to chat\"\n      name=\"searchUser\"\n      formControlName=\"searchUser\"\n      >\n      <span *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n\n    <div class=\"card bg-light mt-3\">\n        <div class=\"form-group ml-3 mt-3\">\n            <label for=\"\">Datepicker</label>\n            <date-picker \n              [(dates)]=\"testDate\" \n              [require]=\"true\" \n              [future]=\"true\"\n              formControlName=\"testDatepicker\"\n              >\n            </date-picker>\n          </div>\n    </div>\n    <div class=\"card bg-light mt-3\">\n        <div class=\"form-group mt-3\">\n            <checkbox \n              [size]=\"'sm'\" \n              [label]=\"'No Medical Condition'\" \n              [position]=\"'right'\" \n              [(check)]=\"noMedicalConditionFlag\" \n              (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n              formControlName=\"testCheckbox\">\n            </checkbox>\n        </div>\n    </div>\n      \n\n    <!-- <div class=\"card bg-light\">\n        <h3>Diagnosed Condition</h3>\n        {{ rows | json }}\n        <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n            <ngx-datatable\n            #mydatatable\n            class=\"bootstrap\"\n            (select)=\"onSelect($event)\"\n            [selectionType]=\"'single'\"\n            [selectCheck]=\"checkSelectedRow\"\n            [selected]=\"selected\"\n            [columnMode]=\"'force'\"\n            [rowClass]=\"getRowClass\"\n            [rowHeight]=\"35\"\n            [rows]=\"rows\"\n            [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n            >\n            <ngx-datatable-column name=\"Condition Type\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                      *ngIf=\"!row.dummy\"\n                      [(ngModel)]=\"row.conditionType\"\n                      name=\"conditionType\"\n                      class=\"form-control tableCell-align\">\n                  <option value=\"\">Select Condition Type</option>\n                  <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                </select>\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Condition\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <input \n                    *ngIf=\"!row.dummy\"\n                    type=\"text\" \n                    class=\"form-control tableCell-align\"\n                    name=\"condition\"\n                    >\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Date of Diagnosis\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                  <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                      <date-picker \n                          [(dates)]=\"row.dateOfDiagnosis\" \n                          [require]=\"'false'\" \n                          [future]=\"true\"\n                          [customClass]=\"'dpFullWidth'\"\n                          class=\"tableCell-align\"\n                          style=\"width: 100%;\"></date-picker>\n                  </div>\n              </ng-template>\n            </ngx-datatable-column>\n          </ngx-datatable>\n        </div>\n        <div class=\"row form-group mx-0\">\n            <div class=\"col-md-3 mt-2\">\n              <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n            </div>\n            <div class=\"col-md-4 offset-md-5\">\n              <button class=\"btn btn-primary\" (click)=\"addRow()\" type=\"button\">\n                Add Condition\n              </button>\n              <button class=\"btn btn-secondary\" (click)=\"removeRow()\" type=\"button\">\n                Remove Condition\n              </button>\n            </div>\n        </div>\n    </div> -->\n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</form>\n"
+module.exports = "<form class=\"container\" [formGroup]=\"ee1Form\" (ngSubmit)=\"submitForm()\">\n    <input \n      type=\"text\" \n      class=\"form-control\" \n      placeholder=\"Search for user to chat\"\n      name=\"searchUser\"\n      formControlName=\"searchUser\"\n      >\n      <span *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n\n    <div class=\"card bg-light mt-3\">\n        <div class=\"form-group ml-3 mt-3\">\n            <label for=\"\">Datepicker</label>\n            <date-picker \n              [(dates)]=\"testDate\" \n              [require]=\"true\" \n              [future]=\"true\"\n              formControlName=\"testDatepicker\"\n              >\n            </date-picker>\n          </div>\n    </div>\n    <div class=\"card bg-light mt-3\">\n        <div class=\"form-group mt-3\">\n            <checkbox \n              [size]=\"'sm'\" \n              [label]=\"'No Medical Condition'\" \n              [position]=\"'right'\" \n              [(check)]=\"noMedicalConditionFlag\" \n              (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n              formControlName=\"testCheckbox\">\n            </checkbox>\n        </div>\n    </div>\n    <div class=\"card bg-light mt-3\">\n        <div class=\"form-group mt-3\">\n            <btn-radio [btnItem]=\"address\" [(selectedBtn)]=\"addressSelection\" (selectedBtnChange)=\"addressChange($event)\"></btn-radio>\n        </div>\n    </div>\n\n      \n\n    <!-- <div class=\"card bg-light\">\n        <h3>Diagnosed Condition</h3>\n        {{ rows | json }}\n        <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n            <ngx-datatable\n            #mydatatable\n            class=\"bootstrap\"\n            (select)=\"onSelect($event)\"\n            [selectionType]=\"'single'\"\n            [selectCheck]=\"checkSelectedRow\"\n            [selected]=\"selected\"\n            [columnMode]=\"'force'\"\n            [rowClass]=\"getRowClass\"\n            [rowHeight]=\"35\"\n            [rows]=\"rows\"\n            [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n            >\n            <ngx-datatable-column name=\"Condition Type\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                      *ngIf=\"!row.dummy\"\n                      [(ngModel)]=\"row.conditionType\"\n                      name=\"conditionType\"\n                      class=\"form-control tableCell-align\">\n                  <option value=\"\">Select Condition Type</option>\n                  <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                </select>\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Condition\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <input \n                    *ngIf=\"!row.dummy\"\n                    type=\"text\" \n                    class=\"form-control tableCell-align\"\n                    name=\"condition\"\n                    >\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Date of Diagnosis\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                  <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                      <date-picker \n                          [(dates)]=\"row.dateOfDiagnosis\" \n                          [require]=\"'false'\" \n                          [future]=\"true\"\n                          [customClass]=\"'dpFullWidth'\"\n                          class=\"tableCell-align\"\n                          style=\"width: 100%;\"></date-picker>\n                  </div>\n              </ng-template>\n            </ngx-datatable-column>\n          </ngx-datatable>\n        </div>\n        <div class=\"row form-group mx-0\">\n            <div class=\"col-md-3 mt-2\">\n              <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n            </div>\n            <div class=\"col-md-4 offset-md-5\">\n              <button class=\"btn btn-primary\" (click)=\"addRow()\" type=\"button\">\n                Add Condition\n              </button>\n              <button class=\"btn btn-secondary\" (click)=\"removeRow()\" type=\"button\">\n                Remove Condition\n              </button>\n            </div>\n        </div>\n    </div> -->\n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</form>\n"
 
 /***/ }),
 
@@ -639,6 +642,88 @@ var NavbarComponent = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=navbar.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/btn-group/btn-group.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".btn-default {\r\n  border: 1px solid rgba(0, 0, 0, 0.125);\r\n  font-size: 12px;\r\n  cursor: pointer;\r\n}\r\n.active {\r\n  background-color: #449d44;\r\n  color: #ffffff;\r\n}\r\n", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/btn-group/btn-group.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"btn-group\" ngbRadioGroup name=\"radioBasic\" [(ngModel)]=\"selectedBtn\" (ngModelChange)=\"change($event)\">\r\n    <label class=\"btn-default px-2\" ngbButtonLabel *ngFor=\"let btn of btnItem\">\r\n    <input type=\"radio\" ngbButton [value]=\"btn.value\"> {{btn.name}}\r\n  </label>\r\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/btn-group/btn-group.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BtnGroupComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var BtnGroupComponent = /** @class */ (function () {
+    function BtnGroupComponent() {
+        this.selectedBtnChange = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+    }
+    BtnGroupComponent.prototype.ngOnInit = function () {
+    };
+    BtnGroupComponent.prototype.change = function (newValue) {
+        this.selectedBtn = newValue;
+        this.selectedBtnChange.emit(newValue);
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], BtnGroupComponent.prototype, "btnItem", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], BtnGroupComponent.prototype, "selectedBtn", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", String)
+    ], BtnGroupComponent.prototype, "type", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        __metadata("design:type", Object)
+    ], BtnGroupComponent.prototype, "selectedBtnChange", void 0);
+    BtnGroupComponent = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'btn-radio',
+            template: __webpack_require__("../../../../../src/app/components/shared/btn-group/btn-group.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/components/shared/btn-group/btn-group.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], BtnGroupComponent);
+    return BtnGroupComponent;
+}());
+
+//# sourceMappingURL=btn-group.component.js.map
 
 /***/ }),
 

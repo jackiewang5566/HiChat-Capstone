@@ -1,0 +1,5 @@
+<div class="btn-group" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedBtn" (ngModelChange)="change($event)">
+    <label class="btn-default px-2" ngbButtonLabel *ngFor="let btn of btnItem">
+    <input type="radio" ngbButton [value]="btn.value"> {{btn.name}}
+  </label>
+</div>

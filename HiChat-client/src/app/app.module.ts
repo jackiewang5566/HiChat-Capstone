@@ -23,6 +23,7 @@ import { routing } from 'app/app.routes';
 import { HomeComponent } from './components/home/home.component';
 
 // import shared
+import { BtnGroupComponent } from './components/shared/btn-group/btn-group.component';
 import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 import { ClickOutsideDirective } from './components/shared/clickOutside.directive';
 import { DatePickerComponent } from './components/shared/date-picker/date-picker.component';
@@ -36,7 +37,8 @@ import { DatePickerComponent } from './components/shared/date-picker/date-picker
     HomeComponent,
     CheckboxComponent,
     ClickOutsideDirective,
-    DatePickerComponent
+    DatePickerComponent,
+    BtnGroupComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,128 @@
+<form class="container" [formGroup]="ee1Form" (ngSubmit)="submitForm()">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search for user to chat"
+      name="searchUser"
+      formControlName="searchUser"
+      >
+      <span 
+        class="warning-block"
+        *ngIf="!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched">Please enter a username</span>
+
+    <div class="card bg-light mt-3">
+        <div class="form-group ml-3 mt-3">
+            <label for="">Datepicker</label>
+            <date-picker 
+              [(dates)]="testDate" 
+              [require]="true" 
+              [future]="true"
+              formControlName="testDatepicker"
+              >
+            </date-picker>
+          </div>
+    </div>
+    <div class="card bg-light mt-3">
+        <div class="form-group mt-3">
+            <checkbox 
+              [size]="'sm'" 
+              [label]="'No Medical Condition'" 
+              [position]="'right'" 
+              [(check)]="noMedicalConditionFlag" 
+              (checkChange)="noMedicalCondition(noMedicalConditionFlag)"
+              formControlName="testCheckbox">
+            </checkbox>
+        </div>
+    </div>
+    <div class="card bg-light mt-3">
+        <div class="form-group mt-3 ml-3">
+            <btn-radio 
+              [btnItem]="address" 
+              [(selectedBtn)]="addressSelection" 
+              (selectedBtnChange)="addressChange($event)"
+              formControlName="testBtnGroup"></btn-radio>
+        </div>
+    </div>
+
+      
+
+    <!-- <div class="card bg-light">
+        <h3>Diagnosed Condition</h3>
+        {{ rows | json }}
+        <div class="mb-3 mt-3" style="z-index: 1;">
+            <ngx-datatable
+            #mydatatable
+            class="bootstrap"
+            (select)="onSelect($event)"
+            [selectionType]="'single'"
+            [selectCheck]="checkSelectedRow"
+            [selected]="selected"
+            [columnMode]="'force'"
+            [rowClass]="getRowClass"
+            [rowHeight]="35"
+            [rows]="rows"
+            [messages]="{'emptyMessage': 'Please add conditions'}"
+            >
+            <ngx-datatable-column name="Condition Type">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <select
+                      *ngIf="!row.dummy"
+                      [(ngModel)]="row.conditionType"
+                      name="conditionType"
+                      class="form-control tableCell-align">
+                  <option value="">Select Condition Type</option>
+                  <option [ngValue]="row.conditionType">{{ row.conditionType }}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Condition">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <input 
+                    *ngIf="!row.dummy"
+                    type="text" 
+                    class="form-control tableCell-align"
+                    name="condition"
+                    >
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Date of Diagnosis">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                  <div class="form-inline" *ngIf="!row.dummy">
+                      <date-picker 
+                          [(dates)]="row.dateOfDiagnosis" 
+                          [require]="'false'" 
+                          [future]="true"
+                          [customClass]="'dpFullWidth'"
+                          class="tableCell-align"
+                          style="width: 100%;"></date-picker>
+                  </div>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+        <div class="row form-group mx-0">
+            <div class="col-md-3 mt-2">
+              <checkbox [size]="'sm'" [label]="'No Medical Condition'" [position]="'right'" [(check)]="noMedicalConditionFlag" (checkChange)="noMedicalCondition(noMedicalConditionFlag)"></checkbox>
+            </div>
+            <div class="col-md-4 offset-md-5">
+              <button class="btn btn-primary" (click)="addRow()" type="button">
+                Add Condition
+              </button>
+              <button class="btn btn-secondary" (click)="removeRow()" type="button">
+                Remove Condition
+              </button>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="card bg-light mt-3">
+      <div class="row form-group">
+        <div class="col-md-2 ml-auto mt-3">
+            <button class="btn btn-primary" type="submit" [disabled]="!ee1Form.valid">Submit</button>
+            <button class="btn btn-default" type="reset">reset</button>
+        </div>
+      </div>
+    </div>
+
+    <pre>{{ ee1Form.value | json }}</pre>
+</form>

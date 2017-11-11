@@ -1,25 +1,40 @@
-<form class="container" [formGroup]="ee1Form" (ngSubmit)="onSubmit()">
+<form class="container" [formGroup]="ee1Form" (ngSubmit)="submitForm()">
     <input 
       type="text" 
-      class="form-control mb-3" 
+      class="form-control" 
       placeholder="Search for user to chat"
       name="searchUser"
       formControlName="searchUser"
       >
       <span *ngIf="!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched">Please enter a username</span>
 
-    <div class="form-group">
-      <label for="">Datepicker</label>
-      <date-picker 
-        [(dates)]="testDate" 
-        [require]="true" 
-        [future]="true"
-        formControlName="testDatepicker">
-      </date-picker>
+    <div class="card bg-light mt-3">
+        <div class="form-group ml-3 mt-3">
+            <label for="">Datepicker</label>
+            <date-picker 
+              [(dates)]="testDate" 
+              [require]="true" 
+              [future]="true"
+              formControlName="testDatepicker"
+              >
+            </date-picker>
+          </div>
+    </div>
+    <div class="card bg-light mt-3">
+        <div class="form-group mt-3">
+            <checkbox 
+              [size]="'sm'" 
+              [label]="'No Medical Condition'" 
+              [position]="'right'" 
+              [(check)]="noMedicalConditionFlag" 
+              (checkChange)="noMedicalCondition(noMedicalConditionFlag)"
+              formControlName="testCheckbox">
+            </checkbox>
+        </div>
     </div>
       
 
-    <div class="card bg-light">
+    <!-- <div class="card bg-light">
         <h3>Diagnosed Condition</h3>
         {{ rows | json }}
         <div class="mb-3 mt-3" style="z-index: 1;">
@@ -86,17 +101,16 @@
               </button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="card bg-light mt-3">
       <div class="row form-group">
         <div class="col-md-2 ml-auto mt-3">
-            <button 
-                class="btn btn-primary" 
-                type="button"
-                >Submit</button>
+            <button class="btn btn-primary" type="submit" [disabled]="!ee1Form.valid">Submit</button>
             <button class="btn btn-default" type="reset">reset</button>
         </div>
       </div>
     </div>
+
+    <pre>{{ ee1Form.value | json }}</pre>
 </form>

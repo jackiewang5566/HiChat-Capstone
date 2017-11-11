@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { NgForm } from '@angular/forms';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { DatepickerValidator } from '../shared/date-picker/date-picker.validators';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,6 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 export class HomeComponent implements OnInit {
   @ViewChild('container') container;
   @ViewChild('input[ngbDatepicker]') datePicker;
-
   ee1Form: FormGroup;
 
   dynamicId;
@@ -77,13 +77,16 @@ export class HomeComponent implements OnInit {
   constructor(private el: ElementRef, private fb: FormBuilder) {
     this.dummyRows = this.rows;
     this.ee1Form = fb.group({
-        'searchUser': ['Neal', Validators.required],
-        'testDatepicker': [null]
-    })
+      'searchUser': ['Neal', Validators.required],
+      'testDatepicker': [null, DatepickerValidator(true, null)],
+      'testCheckbox': [null, null]
+    });
   }
 
   ngOnInit() {
-    
+      // this.ee1Form = new FormGroup({
+      //   'searchUser': new FormControl('Neal', Validators.required)
+      // });
   }
 
   getCellClass({ row, column, value }): any {
@@ -93,7 +96,6 @@ export class HomeComponent implements OnInit {
   }
 
   getRowClass(row) {
-    console.log('rowClass');
     return {
       'activeRowClass': row.active
     }
@@ -187,7 +189,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  submitForm() {
+    console.log('test');
     console.log(this.ee1Form);
   }
 

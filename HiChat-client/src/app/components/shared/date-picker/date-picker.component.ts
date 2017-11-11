@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output ,EventEmitter, ViewChild, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, OnInit, Input, Output ,EventEmitter, ViewChild, forwardRef, OnChanges } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl } from '@angular/forms';
 import { NgbDatepickerConfig, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateFRParserFormatter } from "./ngb-date-fr-parser-formatter"
-
+import { NgbDateFRParserFormatter } from "./ngb-date-fr-parser-formatter";
+import { DatepickerValidator } from './date-picker.validators';
 
 @Component({
     selector: 'date-picker',
@@ -20,7 +20,7 @@ import { NgbDateFRParserFormatter } from "./ngb-date-fr-parser-formatter"
       }
     ]
 })
-export class DatePickerComponent implements OnInit, ControlValueAccessor {
+export class DatePickerComponent implements OnInit, OnChanges, ControlValueAccessor {
     @Input() public customClass;
     @Input() public dates;
     @Input() public require;
@@ -29,7 +29,8 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     @ViewChild('dp') dp;
     public currentDate:Date = new Date();
     public maxDate:Object;
-    public pattern:RegExp = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/
+    public pattern:RegExp = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$/;
+    public validateFn: Function;
   
     constructor() {
 
@@ -48,10 +49,21 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
     }
 
     ngOnInit() { 
-      this.maxDate = this.future?"-":{year:this.currentDate.getFullYear(), month:this.currentDate.getMonth()+1, day:this.currentDate.getDate()};
+      // this.maxDate = this.future?"-":{year:this.currentDate.getFullYear(), month:this.currentDate.getMonth()+1, day:this.currentDate.getDate()};
+      // DatepickerValidator(this.maxDate);
     }
+
+    ngOnChanges(changes) {
+      this.maxDate = this.future?"-":{year:this.currentDate.getFullYear(), month:this.currentDate.getMonth()+1, day:this.currentDate.getDate()};
+      this.validateFn = DatepickerValidator(this.require, this.maxDate);
+    }
+
+    validate(c: FormControl) {
+      return this.validateFn(c);
+    }
+
     onDateChanged(event): void {
-      console.log('test');
+      // structure like { year: 2017, month: 11, day: 10 }
       if (this.pattern.test(event)){
           const selectDate = new Date(event);
           event = {
@@ -85,7 +97,11 @@ export class DatePickerComponent implements OnInit, ControlValueAccessor {
       this.propagateChange = fn;
     }
 
-    registerOnTouched() {
+    /** 
+     * registerOnTouched(fn: any) Similiar to registerOnChange(), this registers a handler specifically for when a control receives 
+     * a touch event.
+     * */
+    registerOnTouched(fn) {
 
     }
 

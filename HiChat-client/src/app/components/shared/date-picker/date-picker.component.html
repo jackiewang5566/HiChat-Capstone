@@ -17,13 +17,14 @@
     </div>
     <div *ngIf="dp.invalid && dp.touched"
         class="p-1">
+        {{ dp.errors | json }}
         <div class="form-control-feedback" *ngIf="dp.errors.required">
             Date is required.
         </div>
         <div class="form-control-feedback" *ngIf="dp.errors.ngbDate && dp.errors.ngbDate.invalid">
             format is not correct.
         </div>
-        <div class="form-control-feedback" *ngIf="dp.errors.ngbDate && dp.errors.ngbDate.requiredAfte">
+        <div class="form-control-feedback" *ngIf="dp.errors.ngbDate && dp.errors.ngbDate.requiredAfter">
             Future date is not allowed
         </div>
     </div>

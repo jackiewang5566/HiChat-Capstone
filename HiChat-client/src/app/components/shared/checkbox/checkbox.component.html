@@ -1,4 +1,4 @@
-<div (click)="changeCheckbox()">
+<div (click)="changeCheckbox($event)">
     <label *ngIf="position === 'left'">{{ label }}</label>
     <span 
         class="fa mx-3"

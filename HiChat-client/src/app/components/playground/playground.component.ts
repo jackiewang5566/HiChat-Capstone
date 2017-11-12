@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { NgForm } from '@angular/forms';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatepickerValidator } from '../shared/date-picker/date-picker.validators';
 
 @Component({
@@ -21,58 +21,60 @@ export class PlaygroundComponent implements OnInit {
     { name: "Foreign", value: "foreign" }
   ];
   addressSelection;
-
+  
   noMedicalConditionFlag: boolean = false;
-  rows = [
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 0
-    },
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 1
-    },
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 2
-    },
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 3
-    },
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 4
-    },
-    {
-      "conditionType": "",
-      "condition": "",
-      "dateOfDiagnosis": "",
-      "dummy": true,
-      "active": false,
-      "index": 5
-    }
-  ];
+  rowsFormArray: FormArray;
+  rows = [];
+  // rows = [
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 0
+  //   },
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 1
+  //   },
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 2
+  //   },
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 3
+  //   },
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 4
+  //   },
+  //   {
+  //     "conditionType": "",
+  //     "condition": "",
+  //     "dateOfDiagnosis": "",
+  //     "dummy": true,
+  //     "active": false,
+  //     "index": 5
+  //   }
+  // ];
   dummyRows;
 
   selected = [];
@@ -81,16 +83,50 @@ export class PlaygroundComponent implements OnInit {
 
   constructor(private el: ElementRef, private fb: FormBuilder) {
     this.dummyRows = this.rows;
-    this.ee1Form = fb.group({
-      'searchUser': ['Neal', Validators.required],
-      'testDatepicker': [null, DatepickerValidator(true, null)],
-      'testCheckbox': [null, null],
-      'testBtnGroup': [this.address[0].value, null]
-    });
   }
 
   ngOnInit() {
     // this.addressSelection = this.address[0].value;
+    this.ee1Form = this.fb.group({
+      'searchUser': ['Neal', Validators.required],
+      'testDatepicker': [null, DatepickerValidator(true, null)],
+      'testCheckbox': [null, null],
+      'testBtnGroup': [this.address[0].value, null],
+      'conditions': this.initConditions()
+    });
+  }
+
+  initConditions() {
+    // Initilize FormArray
+    this.rowsFormArray = this.fb.array([]);
+    let defaultCondition = {
+      "conditionType": "",
+      "condition": "",
+      "dateOfDiagnosis": "",
+      "dummy": true,
+      "active": false,
+      "index": 0
+    };
+    let newCondition;
+    let conditionFormGroup;
+    for (let i = 0; i < this.tableFixedRowSize; i++) {
+      newCondition = { ...defaultCondition };
+      newCondition.index = i;
+      conditionFormGroup = this.fb.group({
+        "conditionType": [],
+        "condition": [],
+        "dateOfDiagnosis": [],
+        "dummy": [true],
+        "active": [false],
+        "index": [i]
+      });
+      this.rows.push(newCondition);
+      this.rowsFormArray.push(this.fb.control({'i': conditionFormGroup}));
+    }
+    // this.fb.group({
+    //   '0': this.rowsFormArray
+    // })
+    return this.rowsFormArray;
   }
 
   getCellClass({ row, column, value }): any {
@@ -144,8 +180,11 @@ export class PlaygroundComponent implements OnInit {
       if (this.rows[i].dummy) {
         // update the index
         newRow.index = i;
-        // add newRow to rows
+        const newRowControl = this.fb.control(newRow);
+        // remove old row and add newRow to rows
         this.rows.splice(i, 1, newRow);
+        // setControl replace an existing control
+        (<FormArray>this.ee1Form.get('conditions')).setControl(i, newRowControl); 
         // this.checkSelectedRow(newRow, null, null);
         this.onSelect(newSelectedObj);
         break;
@@ -155,6 +194,7 @@ export class PlaygroundComponent implements OnInit {
     if (i === this.rows.length) {
       newRow.index = i;
       this.rows.push(newRow);
+      (<FormArray>this.ee1Form.get('conditions')).push(this.fb.control(newRow));
       this.onSelect(newSelectedObj);
     }
   }
@@ -172,14 +212,18 @@ export class PlaygroundComponent implements OnInit {
     const removeIndex = this.selected[0].index;
     if (this.rows.length > this.tableFixedRowSize) {
       this.rows.splice(removeIndex, 1);
+      (<FormArray>this.ee1Form.get('conditions')).removeAt(removeIndex);
     } else {
       this.rows.splice(removeIndex, 1);
+      (<FormArray>this.ee1Form.get('conditions')).removeAt(removeIndex)
       this.rows.push(dummyRow);
+      (<FormArray>this.ee1Form.get('conditions')).push(this.fb.control(dummyRow));
     }
 
     // update subsequent index
     for (let i = removeIndex; i < this.rows.length; i++) {
       this.rows[i].index--;
+      (<FormArray>this.ee1Form.get('conditions')).setControl(i, this.fb.control(this.rows[i]));
     }
   }
 
@@ -198,7 +242,6 @@ export class PlaygroundComponent implements OnInit {
   }
 
   submitForm() {
-    console.log('test');
     console.log(this.ee1Form);
   }
 

@@ -3,6 +3,7 @@ import { AppComponent } from 'app/app.component';
 import { LoginComponent } from 'app/components/login/login.component';
 import { SignupComponent } from 'app/components/signup/signup.component';
 import { HomeComponent } from 'app/components/home/home.component';
+import { PlaygroundComponent } from 'app/components/playground/playground.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'playground',
+        component: PlaygroundComponent
     },
     // {
     //     path: 'profile/:userId',

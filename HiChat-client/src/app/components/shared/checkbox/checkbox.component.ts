@@ -25,7 +25,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.label);
+    
   }
 
   changeCheckbox() {

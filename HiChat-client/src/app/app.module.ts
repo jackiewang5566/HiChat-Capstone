@@ -27,6 +27,7 @@ import { BtnGroupComponent } from './components/shared/btn-group/btn-group.compo
 import { CheckboxComponent } from './components/shared/checkbox/checkbox.component';
 import { ClickOutsideDirective } from './components/shared/clickOutside.directive';
 import { DatePickerComponent } from './components/shared/date-picker/date-picker.component';
+import { PlaygroundComponent } from './components/playground/playground.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DatePickerComponent } from './components/shared/date-picker/date-picker
     CheckboxComponent,
     ClickOutsideDirective,
     DatePickerComponent,
-    BtnGroupComponent
+    BtnGroupComponent,
+    PlaygroundComponent
   ],
   imports: [
     BrowserModule,

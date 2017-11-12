@@ -86,19 +86,19 @@ export class PlaygroundComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.addressSelection = this.address[0].value;
+    this.addressSelection = this.address[0].value;
+    // this.initConditions();
     this.ee1Form = this.fb.group({
       'searchUser': ['Neal', Validators.required],
       'testDatepicker': [null, DatepickerValidator(true, null)],
       'testCheckbox': [null, null],
       'testBtnGroup': [this.address[0].value, null],
-      'conditions': this.initConditions()
+      'conditions': this.fb.array([])
     });
+    this.initConditions();
   }
 
   initConditions() {
-    // Initilize FormArray
-    this.rowsFormArray = this.fb.array([]);
     let defaultCondition = {
       "conditionType": "",
       "condition": "",
@@ -113,20 +113,16 @@ export class PlaygroundComponent implements OnInit {
       newCondition = { ...defaultCondition };
       newCondition.index = i;
       conditionFormGroup = this.fb.group({
-        "conditionType": [],
-        "condition": [],
-        "dateOfDiagnosis": [],
+        "conditionType": [null],
+        "condition": [null],
+        "dateOfDiagnosis": [null],
         "dummy": [true],
         "active": [false],
         "index": [i]
       });
       this.rows.push(newCondition);
-      this.rowsFormArray.push(this.fb.control({'i': conditionFormGroup}));
+      (<FormArray>this.ee1Form.get('conditions')).push(conditionFormGroup);
     }
-    // this.fb.group({
-    //   '0': this.rowsFormArray
-    // })
-    return this.rowsFormArray;
   }
 
   getCellClass({ row, column, value }): any {
@@ -159,6 +155,16 @@ export class PlaygroundComponent implements OnInit {
     }
   }
 
+  prevSelectedIndex;
+  selectRow(index) {
+    console.log(this.prevSelectedIndex);
+    if (this.prevSelectedIndex !== undefined) {
+      (<FormArray>this.ee1Form.get('conditions')).controls[this.prevSelectedIndex].value.active = false;
+    } 
+    (<FormArray>this.ee1Form.get('conditions')).controls[index].value.active = true;
+    this.prevSelectedIndex = index;
+  }
+
   addRow() {
     const newRow = {
       "conditionType": "",
@@ -174,17 +180,31 @@ export class PlaygroundComponent implements OnInit {
         "0": newRow
       }
     };
+
+    let conditionFormGroup;
     
     let i = 0;
     for (; i < this.rows.length; i++) {
+      if ((<FormArray>this.ee1Form.get('conditions')).controls[i].value.active) {
+        (<FormArray>this.ee1Form.get('conditions')).controls[i].value.active = false;
+      }
       if (this.rows[i].dummy) {
         // update the index
         newRow.index = i;
-        const newRowControl = this.fb.control(newRow);
+        // const newRowControl = this.fb.control(newRow);
+        conditionFormGroup = this.fb.group({
+          "conditionType": [null],
+          "condition": [null],
+          "dateOfDiagnosis": [null],
+          "dummy": [false],
+          "active": [true],
+          "index": [i]
+        });
         // remove old row and add newRow to rows
         this.rows.splice(i, 1, newRow);
+        
         // setControl replace an existing control
-        (<FormArray>this.ee1Form.get('conditions')).setControl(i, newRowControl); 
+        (<FormArray>this.ee1Form.get('conditions')).setControl(i, conditionFormGroup); 
         // this.checkSelectedRow(newRow, null, null);
         this.onSelect(newSelectedObj);
         break;
@@ -194,7 +214,15 @@ export class PlaygroundComponent implements OnInit {
     if (i === this.rows.length) {
       newRow.index = i;
       this.rows.push(newRow);
-      (<FormArray>this.ee1Form.get('conditions')).push(this.fb.control(newRow));
+      conditionFormGroup = this.fb.group({
+        "conditionType": [null],
+        "condition": [null],
+        "dateOfDiagnosis": [null],
+        "dummy": [false],
+        "active": [true],
+        "index": [i]
+      });
+      (<FormArray>this.ee1Form.get('conditions')).push(conditionFormGroup);
       this.onSelect(newSelectedObj);
     }
   }

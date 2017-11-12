@@ -498,7 +498,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".tableCell-align {\n  margin-top: 3.5px;\n}\ninput.ng-invalid.ng-touched {\n  border: 1px solid red;\n}\n.warning-block {\n  color: #dc3545;\n}\n", ""]);
+exports.push([module.i, ".tableCell-align {\n  margin-top: 3.5px;\n}\ninput.ng-invalid.ng-touched {\n  border: 1px solid red;\n}\n.warning-block {\n  color: #dc3545;\n}\n.activeRow {\n  background-color: #f9ca07 !important;\n}\ntable.table-striped.table-bordered {\n  overflow: auto;\n}\ntable.table-striped.table-bordered tr {\n  height: 35px;\n}\n", ""]);
 
 // exports
 
@@ -511,7 +511,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/playground/playground.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <form [formGroup]=\"ee1Form\">\n        <input \n          type=\"text\" \n          class=\"form-control\" \n          placeholder=\"Search for user to chat\"\n          name=\"searchUser\"\n          formControlName=\"searchUser\"\n          >\n          <span \n            class=\"warning-block\"\n            *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n    \n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate\" \n                  [require]=\"true\" \n                  [future]=\"true\"\n                  formControlName=\"testDatepicker\"\n                  >\n                </date-picker>\n              </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3\">\n                <checkbox \n                  [size]=\"'sm'\" \n                  [label]=\"'No Medical Condition'\" \n                  [position]=\"'right'\" \n                  [(check)]=\"noMedicalConditionFlag\" \n                  (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n                  formControlName=\"testCheckbox\">\n                </checkbox>\n            </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3 ml-3\">\n                <btn-radio \n                  [btnItem]=\"address\" \n                  [(selectedBtn)]=\"addressSelection\" \n                  (selectedBtnChange)=\"addressChange($event)\"\n                  formControlName=\"testBtnGroup\"></btn-radio>\n            </div>\n        </div>\n\n        <!-- To Be Continue-->\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group m-3\" formArrayName=\"conditions\">\n                <table class=\"table table-striped table-bordered\">\n                  <thead>\n                      <tr>\n                          <th>Condtion Type</th>\n                          <th>Condition</th>\n                          <th>Date Of Diagnosis</th>\n                      </tr>\n                  </thead>\n                  <tbody>\n                      <tr *ngFor=\"let row of ee1Form.get('conditions').controls; let i = index;\">\n                          <td>\n                              <select\n                                  class=\"form-control tableCell-align\">\n                                <option value=\"\">Select Condition Type</option>\n                                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                              </select>\n                          </td>\n                          <td>\n                              <input \n                                  type=\"text\" \n                                  class=\"form-control tableCell-align\"\n                                  [formControlName]=\"ee1Form.get('conditions').controls[i].condition\"\n                                  name=\"condition\"\n                              >\n                          </td>\n                          <td>\n                            <div>\n                                <date-picker \n                                  [(dates)]=\"row.dateOfDiagnosis\" \n                                  [require]=\"'false'\" \n                                  [future]=\"true\"\n                                  [customClass]=\"'dpFullWidth'\"\n                                  class=\"tableCell-align\"\n                                  style=\"width: 100%;\"\n                                ></date-picker>\n                            </div>\n                          </td>\n                      </tr>\n                  </tbody>\n                </table>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group\">\n              <div class=\"col-md-3 ml-auto mt-3\">\n                  <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\">Submit Form</button>\n                  <button class=\"btn btn-default\" type=\"reset\">reset</button>\n              </div>\n            </div>\n        </div>\n    </form>  \n\n    <!-- <div class=\"card bg-light mt-3\">\n        <h3>Diagnosed Condition</h3>\n        {{ rows | json }}\n        <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n            <ngx-datatable\n                #mydatatable\n                class=\"bootstrap\"\n                (select)=\"onSelect($event)\"\n                [selectionType]=\"'single'\"\n                [selectCheck]=\"checkSelectedRow\"\n                [selected]=\"selected\"\n                [columnMode]=\"'force'\"\n                [rowClass]=\"getRowClass\"\n                [rowHeight]=\"35\"\n                [rows]=\"rows\"\n                [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n            >\n            <ngx-datatable-column name=\"Condition Type\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                <select\n                    *ngIf=\"!row.dummy\"\n                    name=\"conditionType\"\n                    [(ngModel)]=\"row.conditionType\"\n                    class=\"form-control tableCell-align\">\n                  <option value=\"\">Select Condition Type</option>\n                  <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                </select>\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Condition\" >\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                <input \n                    *ngIf=\"!row.dummy\"\n                    type=\"text\" \n                    class=\"form-control tableCell-align\"\n                    [(ngModel)]=\"row.condition\"\n                    name=\"condition\"\n                    >\n              </ng-template>\n            </ngx-datatable-column>\n            <ngx-datatable-column name=\"Date of Diagnosis\">\n              <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                  <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                      <date-picker \n                          [(dates)]=\"row.dateOfDiagnosis\" \n                          [require]=\"'false'\" \n                          [future]=\"true\"\n                          [customClass]=\"'dpFullWidth'\"\n                          class=\"tableCell-align\"\n                          style=\"width: 100%;\"\n                          ></date-picker>\n                  </div>\n              </ng-template>\n            </ngx-datatable-column>\n          </ngx-datatable>\n        </div>\n        <div class=\"row form-group mx-0\">\n            <div class=\"col-md-3 mt-2\">\n              <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n            </div>\n            <div class=\"col-md-4 offset-md-5\">\n              <button \n                class=\"btn btn-primary\" \n                (click)=\"addRow()\" \n                type=\"button\">\n                Add Condition\n              </button>\n              <button \n                class=\"btn btn-secondary\" \n                (click)=\"removeRow()\" \n                type=\"button\">\n                Remove Condition\n              </button>\n            </div>\n        </div>\n    </div> -->\n\n   \n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\" (click)=\"submitForm()\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</div>\n  \n\n    \n\n"
+module.exports = "<div class=\"container\">\n    <form [formGroup]=\"ee1Form\">\n        <input \n          type=\"text\" \n          class=\"form-control\" \n          placeholder=\"Search for user to chat\"\n          name=\"searchUser\"\n          formControlName=\"searchUser\"\n          >\n          <span \n            class=\"warning-block\"\n            *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n    \n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate\" \n                  [require]=\"true\" \n                  [future]=\"true\"\n                  formControlName=\"testDatepicker\"\n                  >\n                </date-picker>\n              </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3\">\n                <checkbox \n                  [size]=\"'sm'\" \n                  [label]=\"'No Medical Condition'\" \n                  [position]=\"'right'\" \n                  [(check)]=\"noMedicalConditionFlag\" \n                  (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n                  formControlName=\"testCheckbox\">\n                </checkbox>\n            </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3 ml-3\">\n                <btn-radio \n                  [btnItem]=\"address\" \n                  [(selectedBtn)]=\"addressSelection\" \n                  (selectedBtnChange)=\"addressChange($event)\"\n                  formControlName=\"testBtnGroup\"></btn-radio>\n            </div>\n        </div>\n\n        <!-- Success -->\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group m-3\" formArrayName=\"conditions\">\n                <table class=\"table table-striped table-bordered\">\n                  <thead>\n                      <tr>\n                          <th>Active</th>\n                          <th>Condtion Type</th>\n                          <th>Condition</th>\n                          <th>Date Of Diagnosis</th>\n                      </tr>\n                  </thead>\n                  <tbody>\n                      <tr *ngFor=\"let row of ee1Form.get('conditions').controls; let i = index;\" \n                          (click)=\"selectRow(i)\" \n                          [ngClass]=\"{ activeRow: ee1Form.get('conditions').controls[i].value.active }\"\n                          >\n                          <td>{{ row.value | json }}</td>\n                          <td [formGroupName]=\"i\">\n                              <select\n                                  *ngIf=\"!row.value.dummy\"\n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"conditionType\">\n                                <option value=\"\">Select Condition Type</option>\n                                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                              </select>\n                          </td>\n                          <td [formGroupName]=\"i\">\n                              <input \n                                  *ngIf=\"!row.value.dummy\"\n                                  type=\"text\" \n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"condition\"\n                                  name=\"condition\"\n                              >\n                          </td>\n                          <td [formGroupName]=\"i\">\n                            <date-picker\n                              *ngIf=\"!row.value.dummy\"\n                              formControlName=\"dateOfDiagnosis\"\n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              style=\"width: 100%;\"\n                            ></date-picker>\n                          </td>\n                      </tr>\n                  </tbody>\n                </table>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n\n        \n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group\">\n              <div class=\"col-md-3 ml-auto mt-3\">\n                  <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\">Submit Form</button>\n                  <button class=\"btn btn-default\" type=\"reset\">reset</button>\n              </div>\n            </div>\n        </div>\n    </form>  \n\n   \n    <!-- To be continue -->\n        <div class=\"card bg-light mt-3\">\n            <h3>Diagnosed Condition</h3>\n            {{ rows | json }}\n            <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n                <ngx-datatable\n                    #mydatatable\n                    class=\"bootstrap\"\n                    (select)=\"onSelect($event)\"\n                    [selectionType]=\"'single'\"\n                    [selectCheck]=\"checkSelectedRow\"\n                    [selected]=\"selected\"\n                    [columnMode]=\"'force'\"\n                    [rowClass]=\"getRowClass\"\n                    [rowHeight]=\"35\"\n                    [rows]=\"ee1Form.get('conditions').controls\"\n                    [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n                >\n                <ngx-datatable-column name=\"Condition Type\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                    <select\n                        *ngIf=\"!row.dummy\"\n                        name=\"conditionType\"\n                        [(ngModel)]=\"row.conditionType\"\n                        class=\"form-control tableCell-align\">\n                      <option value=\"\">Select Condition Type</option>\n                      <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                    </select>\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Condition\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                    <input \n                        *ngIf=\"!row.dummy\"\n                        type=\"text\" \n                        class=\"form-control tableCell-align\"\n                        [(ngModel)]=\"condition\"\n                        name=\"condition\"\n                        >\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Date of Diagnosis\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                      <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                          <date-picker \n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              class=\"tableCell-align\"\n                              style=\"width: 100%;\"\n                              ></date-picker>\n                      </div>\n                  </ng-template>\n                </ngx-datatable-column>\n              </ngx-datatable>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n\n   \n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\" (click)=\"submitForm()\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</div>\n  \n\n    \n\n"
 
 /***/ }),
 
@@ -558,18 +558,18 @@ var PlaygroundComponent = /** @class */ (function () {
         this.dummyRows = this.rows;
     }
     PlaygroundComponent.prototype.ngOnInit = function () {
-        // this.addressSelection = this.address[0].value;
+        this.addressSelection = this.address[0].value;
+        // this.initConditions();
         this.ee1Form = this.fb.group({
             'searchUser': ['Neal', __WEBPACK_IMPORTED_MODULE_1__angular_forms__["e" /* Validators */].required],
             'testDatepicker': [null, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shared_date_picker_date_picker_validators__["a" /* DatepickerValidator */])(true, null)],
             'testCheckbox': [null, null],
             'testBtnGroup': [this.address[0].value, null],
-            'conditions': this.initConditions()
+            'conditions': this.fb.array([])
         });
+        this.initConditions();
     };
     PlaygroundComponent.prototype.initConditions = function () {
-        // Initilize FormArray
-        this.rowsFormArray = this.fb.array([]);
         var defaultCondition = {
             "conditionType": "",
             "condition": "",
@@ -584,20 +584,16 @@ var PlaygroundComponent = /** @class */ (function () {
             newCondition = __assign({}, defaultCondition);
             newCondition.index = i;
             conditionFormGroup = this.fb.group({
-                "conditionType": [],
-                "condition": [],
-                "dateOfDiagnosis": [],
+                "conditionType": [null],
+                "condition": [null],
+                "dateOfDiagnosis": [null],
                 "dummy": [true],
                 "active": [false],
                 "index": [i]
             });
             this.rows.push(newCondition);
-            this.rowsFormArray.push(this.fb.control({ 'i': conditionFormGroup }));
+            this.ee1Form.get('conditions').push(conditionFormGroup);
         }
-        // this.fb.group({
-        //   '0': this.rowsFormArray
-        // })
-        return this.rowsFormArray;
     };
     PlaygroundComponent.prototype.getCellClass = function (_a) {
         var row = _a.row, column = _a.column, value = _a.value;
@@ -625,6 +621,14 @@ var PlaygroundComponent = /** @class */ (function () {
             this.prevSelected = selected;
         }
     };
+    PlaygroundComponent.prototype.selectRow = function (index) {
+        console.log(this.prevSelectedIndex);
+        if (this.prevSelectedIndex !== undefined) {
+            this.ee1Form.get('conditions').controls[this.prevSelectedIndex].value.active = false;
+        }
+        this.ee1Form.get('conditions').controls[index].value.active = true;
+        this.prevSelectedIndex = index;
+    };
     PlaygroundComponent.prototype.addRow = function () {
         var newRow = {
             "conditionType": "",
@@ -639,16 +643,28 @@ var PlaygroundComponent = /** @class */ (function () {
                 "0": newRow
             }
         };
+        var conditionFormGroup;
         var i = 0;
         for (; i < this.rows.length; i++) {
+            if (this.ee1Form.get('conditions').controls[i].value.active) {
+                this.ee1Form.get('conditions').controls[i].value.active = false;
+            }
             if (this.rows[i].dummy) {
                 // update the index
                 newRow.index = i;
-                var newRowControl = this.fb.control(newRow);
+                // const newRowControl = this.fb.control(newRow);
+                conditionFormGroup = this.fb.group({
+                    "conditionType": [null],
+                    "condition": [null],
+                    "dateOfDiagnosis": [null],
+                    "dummy": [false],
+                    "active": [true],
+                    "index": [i]
+                });
                 // remove old row and add newRow to rows
                 this.rows.splice(i, 1, newRow);
                 // setControl replace an existing control
-                this.ee1Form.get('conditions').setControl(i, newRowControl);
+                this.ee1Form.get('conditions').setControl(i, conditionFormGroup);
                 // this.checkSelectedRow(newRow, null, null);
                 this.onSelect(newSelectedObj);
                 break;
@@ -657,7 +673,15 @@ var PlaygroundComponent = /** @class */ (function () {
         if (i === this.rows.length) {
             newRow.index = i;
             this.rows.push(newRow);
-            this.ee1Form.get('conditions').push(this.fb.control(newRow));
+            conditionFormGroup = this.fb.group({
+                "conditionType": [null],
+                "condition": [null],
+                "dateOfDiagnosis": [null],
+                "dummy": [false],
+                "active": [true],
+                "index": [i]
+            });
+            this.ee1Form.get('conditions').push(conditionFormGroup);
             this.onSelect(newSelectedObj);
         }
     };

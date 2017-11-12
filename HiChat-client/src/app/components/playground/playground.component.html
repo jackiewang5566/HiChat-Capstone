@@ -45,45 +45,52 @@
             </div>
         </div>
 
-        <!-- To Be Continue-->
+        <!-- Success -->
         <div class="card bg-light mt-3">
             <div class="row form-group m-3" formArrayName="conditions">
                 <table class="table table-striped table-bordered">
                   <thead>
                       <tr>
+                          <th>Active</th>
                           <th>Condtion Type</th>
                           <th>Condition</th>
                           <th>Date Of Diagnosis</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let row of ee1Form.get('conditions').controls; let i = index;">
-                          <td>
+                      <tr *ngFor="let row of ee1Form.get('conditions').controls; let i = index;" 
+                          (click)="selectRow(i)" 
+                          [ngClass]="{ activeRow: ee1Form.get('conditions').controls[i].value.active }"
+                          >
+                          <td>{{ row.value | json }}</td>
+                          <td [formGroupName]="i">
                               <select
-                                  class="form-control tableCell-align">
+                                  *ngIf="!row.value.dummy"
+                                  class="form-control tableCell-align"
+                                  formControlName="conditionType">
                                 <option value="">Select Condition Type</option>
                                 <option [ngValue]="row.conditionType">{{ row.conditionType }}</option>
                               </select>
                           </td>
-                          <td>
+                          <td [formGroupName]="i">
                               <input 
+                                  *ngIf="!row.value.dummy"
                                   type="text" 
                                   class="form-control tableCell-align"
-                                  [formControlName]="ee1Form.get('conditions').controls[i].condition"
+                                  formControlName="condition"
                                   name="condition"
                               >
                           </td>
-                          <td>
-                            <div>
-                                <date-picker 
-                                  [(dates)]="row.dateOfDiagnosis" 
-                                  [require]="'false'" 
-                                  [future]="true"
-                                  [customClass]="'dpFullWidth'"
-                                  class="tableCell-align"
-                                  style="width: 100%;"
-                                ></date-picker>
-                            </div>
+                          <td [formGroupName]="i">
+                            <date-picker
+                              *ngIf="!row.value.dummy"
+                              formControlName="dateOfDiagnosis"
+                              [(dates)]="row.dateOfDiagnosis" 
+                              [require]="'false'" 
+                              [future]="true"
+                              [customClass]="'dpFullWidth'"
+                              style="width: 100%;"
+                            ></date-picker>
                           </td>
                       </tr>
                   </tbody>
@@ -110,6 +117,8 @@
             </div>
         </div>
 
+        
+
         <div class="card bg-light mt-3">
             <div class="row form-group">
               <div class="col-md-3 ml-auto mt-3">
@@ -120,82 +129,84 @@
         </div>
     </form>  
 
-    <!-- <div class="card bg-light mt-3">
-        <h3>Diagnosed Condition</h3>
-        {{ rows | json }}
-        <div class="mb-3 mt-3" style="z-index: 1;">
-            <ngx-datatable
-                #mydatatable
-                class="bootstrap"
-                (select)="onSelect($event)"
-                [selectionType]="'single'"
-                [selectCheck]="checkSelectedRow"
-                [selected]="selected"
-                [columnMode]="'force'"
-                [rowClass]="getRowClass"
-                [rowHeight]="35"
-                [rows]="rows"
-                [messages]="{'emptyMessage': 'Please add conditions'}"
-            >
-            <ngx-datatable-column name="Condition Type">
-              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                <select
-                    *ngIf="!row.dummy"
-                    name="conditionType"
-                    [(ngModel)]="row.conditionType"
-                    class="form-control tableCell-align">
-                  <option value="">Select Condition Type</option>
-                  <option [ngValue]="row.conditionType">{{ row.conditionType }}</option>
-                </select>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Condition" >
-              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                <input 
-                    *ngIf="!row.dummy"
-                    type="text" 
-                    class="form-control tableCell-align"
-                    [(ngModel)]="row.condition"
-                    name="condition"
-                    >
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Date of Diagnosis">
-              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-                  <div class="form-inline" *ngIf="!row.dummy">
-                      <date-picker 
-                          [(dates)]="row.dateOfDiagnosis" 
-                          [require]="'false'" 
-                          [future]="true"
-                          [customClass]="'dpFullWidth'"
-                          class="tableCell-align"
-                          style="width: 100%;"
-                          ></date-picker>
-                  </div>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-        </div>
-        <div class="row form-group mx-0">
-            <div class="col-md-3 mt-2">
-              <checkbox [size]="'sm'" [label]="'No Medical Condition'" [position]="'right'" [(check)]="noMedicalConditionFlag" (checkChange)="noMedicalCondition(noMedicalConditionFlag)"></checkbox>
+   
+    <!-- To be continue -->
+        <div class="card bg-light mt-3">
+            <h3>Diagnosed Condition</h3>
+            {{ rows | json }}
+            <div class="mb-3 mt-3" style="z-index: 1;">
+                <ngx-datatable
+                    #mydatatable
+                    class="bootstrap"
+                    (select)="onSelect($event)"
+                    [selectionType]="'single'"
+                    [selectCheck]="checkSelectedRow"
+                    [selected]="selected"
+                    [columnMode]="'force'"
+                    [rowClass]="getRowClass"
+                    [rowHeight]="35"
+                    [rows]="ee1Form.get('conditions').controls"
+                    [messages]="{'emptyMessage': 'Please add conditions'}"
+                >
+                <ngx-datatable-column name="Condition Type">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <select
+                        *ngIf="!row.dummy"
+                        name="conditionType"
+                        [(ngModel)]="row.conditionType"
+                        class="form-control tableCell-align">
+                      <option value="">Select Condition Type</option>
+                      <option [ngValue]="row.conditionType">{{ row.conditionType }}</option>
+                    </select>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Condition">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <input 
+                        *ngIf="!row.dummy"
+                        type="text" 
+                        class="form-control tableCell-align"
+                        [(ngModel)]="condition"
+                        name="condition"
+                        >
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Date of Diagnosis">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                      <div class="form-inline" *ngIf="!row.dummy">
+                          <date-picker 
+                              [(dates)]="row.dateOfDiagnosis" 
+                              [require]="'false'" 
+                              [future]="true"
+                              [customClass]="'dpFullWidth'"
+                              class="tableCell-align"
+                              style="width: 100%;"
+                              ></date-picker>
+                      </div>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
             </div>
-            <div class="col-md-4 offset-md-5">
-              <button 
-                class="btn btn-primary" 
-                (click)="addRow()" 
-                type="button">
-                Add Condition
-              </button>
-              <button 
-                class="btn btn-secondary" 
-                (click)="removeRow()" 
-                type="button">
-                Remove Condition
-              </button>
+            <div class="row form-group mx-0">
+                <div class="col-md-3 mt-2">
+                  <checkbox [size]="'sm'" [label]="'No Medical Condition'" [position]="'right'" [(check)]="noMedicalConditionFlag" (checkChange)="noMedicalCondition(noMedicalConditionFlag)"></checkbox>
+                </div>
+                <div class="col-md-4 offset-md-5">
+                  <button 
+                    class="btn btn-primary" 
+                    (click)="addRow()" 
+                    type="button">
+                    Add Condition
+                  </button>
+                  <button 
+                    class="btn btn-secondary" 
+                    (click)="removeRow()" 
+                    type="button">
+                    Remove Condition
+                  </button>
+                </div>
             </div>
         </div>
-    </div> -->
 
    
 

@@ -7,3 +7,12 @@ input.ng-invalid.ng-touched {
 .warning-block {
   color: #dc3545;
 }
+.activeRow {
+  background-color: #f9ca07 !important;
+}
+table.table-striped.table-bordered {
+  overflow: auto;
+}
+table.table-striped.table-bordered tr {
+  height: 35px;
+}

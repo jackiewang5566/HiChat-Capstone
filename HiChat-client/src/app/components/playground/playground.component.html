@@ -5,6 +5,7 @@
           class="form-control" 
           placeholder="Search for user to chat"
           name="searchUser"
+          [disabled]="ee1Form.get('testCheckbox').value"
           formControlName="searchUser"
           >
           <span 
@@ -17,12 +18,27 @@
                 <date-picker 
                   [(dates)]="testDate" 
                   [require]="true" 
-                  [future]="true"
+                  [future]="false"
                   formControlName="testDatepicker"
                   >
                 </date-picker>
               </div>
         </div>
+
+        <div class="card bg-light mt-3">
+            <div class="form-group ml-3 mt-3">
+                <label for="">Datepicker</label>
+                <date-picker 
+                  [(dates)]="testDate2" 
+                  [require]="true" 
+                  [future]="false"
+                  formControlName="testDatepicker2"
+                  >
+                </date-picker>
+              </div>
+        </div>
+
+
         <div class="card bg-light mt-3">
             <div class="form-group mt-3">
                 <checkbox 
@@ -46,8 +62,8 @@
         </div>
 
         <!-- Success -->
-        <div class="card bg-light mt-3">
-            <div class="row form-group m-3" formArrayName="conditions">
+        <!-- <div class="card bg-light mt-3">
+            <div class="row form-group m-3" formArrayName="conditions" style="height: 500px; overflow: auto;">
                 <table class="table table-striped table-bordered">
                   <thead>
                       <tr>
@@ -115,7 +131,7 @@
                   </button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         
 

@@ -24,7 +24,7 @@ function checkDateRange(selectedDate, maxDate) {
     // Initialize MaxDt and SelectedDt
     // According to the specification, the maximum date is new Date(8640000000000000) (Sat, 13 Sep 275760 00:00:00 GMT)
     let MaxDt: Date = new Date(8640000000000000), SelectedDt: Date = new Date();
-    if (maxDate && maxDate.year && maxDate.month && maxDate.day) {
+    if (selectedDate && maxDate && maxDate.year && maxDate.month && maxDate.day) {
         MaxDt = new Date(maxDate.year, maxDate.month - 1, maxDate.day);
         SelectedDt = new Date(selectedDate.year, selectedDate.month - 1, selectedDate.day);
     }

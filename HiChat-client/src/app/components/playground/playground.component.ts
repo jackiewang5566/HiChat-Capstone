@@ -90,9 +90,10 @@ export class PlaygroundComponent implements OnInit {
     // this.initConditions();
     this.ee1Form = this.fb.group({
       'searchUser': ['Neal', Validators.required],
-      'testDatepicker': [null, DatepickerValidator(true, null)],
+      'testDatepicker': [null, DatepickerValidator(true, new Date())],
+      'testDatepicker2': [null, DatepickerValidator(true, new Date())],
       'testCheckbox': [null, null],
-      'testBtnGroup': [this.address[0].value, null],
+      'testBtnGroup': [this.address[0].value, false],
       'conditions': this.fb.array([])
     });
     this.initConditions();

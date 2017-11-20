@@ -25,56 +25,6 @@ export class PlaygroundComponent implements OnInit {
   noMedicalConditionFlag: boolean = false;
   rowsFormArray: FormArray;
   rows = [];
-  // rows = [
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 0
-  //   },
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 1
-  //   },
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 2
-  //   },
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 3
-  //   },
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 4
-  //   },
-  //   {
-  //     "conditionType": "",
-  //     "condition": "",
-  //     "dateOfDiagnosis": "",
-  //     "dummy": true,
-  //     "active": false,
-  //     "index": 5
-  //   }
-  // ];
   dummyRows;
 
   selected = [];
@@ -94,6 +44,7 @@ export class PlaygroundComponent implements OnInit {
       'testDatepicker2': [null, DatepickerValidator(true, new Date())],
       'testCheckbox': [null, null],
       'testBtnGroup': [this.address[0].value, false],
+      'testDblDatepicker': [{ value: { test1: 'test1', 'disabled': true }}],
       'conditions': this.fb.array([])
     });
     this.initConditions();
@@ -274,6 +225,9 @@ export class PlaygroundComponent implements OnInit {
     console.log(this.ee1Form);
   }
 
+  onSubmit() {
+    console.log(this.ee1Form);
+  }
   // openDatepicker(id) {
   //   this.dynamicId = id;
   //   console.log(this.dynamicId);

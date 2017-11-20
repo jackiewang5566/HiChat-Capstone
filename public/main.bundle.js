@@ -120,6 +120,7 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_shared_clickOutside_directive__ = __webpack_require__("../../../../../src/app/components/shared/clickOutside.directive.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_shared_date_picker_date_picker_component__ = __webpack_require__("../../../../../src/app/components/shared/date-picker/date-picker.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_playground_playground_component__ = __webpack_require__("../../../../../src/app/components/playground/playground.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_shared_dbl_datepicker_dbl_datepicker_component__ = __webpack_require__("../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -152,6 +153,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -167,7 +169,8 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_17__components_shared_clickOutside_directive__["a" /* ClickOutsideDirective */],
                 __WEBPACK_IMPORTED_MODULE_18__components_shared_date_picker_date_picker_component__["a" /* DatePickerComponent */],
                 __WEBPACK_IMPORTED_MODULE_15__components_shared_btn_group_btn_group_component__["a" /* BtnGroupComponent */],
-                __WEBPACK_IMPORTED_MODULE_19__components_playground_playground_component__["a" /* PlaygroundComponent */]
+                __WEBPACK_IMPORTED_MODULE_19__components_playground_playground_component__["a" /* PlaygroundComponent */],
+                __WEBPACK_IMPORTED_MODULE_20__components_shared_dbl_datepicker_dbl_datepicker_component__["a" /* DblDatepickerComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["BrowserModule"],
@@ -511,7 +514,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/playground/playground.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n    <form [formGroup]=\"ee1Form\">\n        <input \n          type=\"text\" \n          class=\"form-control\" \n          placeholder=\"Search for user to chat\"\n          name=\"searchUser\"\n          [disabled]=\"ee1Form.get('testCheckbox').value\"\n          formControlName=\"searchUser\"\n          >\n          <span \n            class=\"warning-block\"\n            *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n    \n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate\" \n                  [require]=\"true\" \n                  [future]=\"false\"\n                  formControlName=\"testDatepicker\"\n                  >\n                </date-picker>\n              </div>\n        </div>\n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate2\" \n                  [require]=\"true\" \n                  [future]=\"false\"\n                  formControlName=\"testDatepicker2\"\n                  >\n                </date-picker>\n              </div>\n        </div>\n\n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3\">\n                <checkbox \n                  [size]=\"'sm'\" \n                  [label]=\"'No Medical Condition'\" \n                  [position]=\"'right'\" \n                  [(check)]=\"noMedicalConditionFlag\" \n                  (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n                  formControlName=\"testCheckbox\">\n                </checkbox>\n            </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3 ml-3\">\n                <btn-radio \n                  [btnItem]=\"address\" \n                  [(selectedBtn)]=\"addressSelection\" \n                  (selectedBtnChange)=\"addressChange($event)\"\n                  formControlName=\"testBtnGroup\"></btn-radio>\n            </div>\n        </div>\n\n        <!-- Success -->\n        <!-- <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group m-3\" formArrayName=\"conditions\" style=\"height: 500px; overflow: auto;\">\n                <table class=\"table table-striped table-bordered\">\n                  <thead>\n                      <tr>\n                          <th>Active</th>\n                          <th>Condtion Type</th>\n                          <th>Condition</th>\n                          <th>Date Of Diagnosis</th>\n                      </tr>\n                  </thead>\n                  <tbody>\n                      <tr *ngFor=\"let row of ee1Form.get('conditions').controls; let i = index;\" \n                          (click)=\"selectRow(i)\" \n                          [ngClass]=\"{ activeRow: ee1Form.get('conditions').controls[i].value.active }\"\n                          >\n                          <td>{{ row.value | json }}</td>\n                          <td [formGroupName]=\"i\">\n                              <select\n                                  *ngIf=\"!row.value.dummy\"\n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"conditionType\">\n                                <option value=\"\">Select Condition Type</option>\n                                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                              </select>\n                          </td>\n                          <td [formGroupName]=\"i\">\n                              <input \n                                  *ngIf=\"!row.value.dummy\"\n                                  type=\"text\" \n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"condition\"\n                                  name=\"condition\"\n                              >\n                          </td>\n                          <td [formGroupName]=\"i\">\n                            <date-picker\n                              *ngIf=\"!row.value.dummy\"\n                              formControlName=\"dateOfDiagnosis\"\n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              style=\"width: 100%;\"\n                            ></date-picker>\n                          </td>\n                      </tr>\n                  </tbody>\n                </table>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div> -->\n\n        \n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group\">\n              <div class=\"col-md-3 ml-auto mt-3\">\n                  <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\">Submit Form</button>\n                  <button class=\"btn btn-default\" type=\"reset\">reset</button>\n              </div>\n            </div>\n        </div>\n    </form>  \n\n   \n    <!-- To be continue -->\n        <div class=\"card bg-light mt-3\">\n            <h3>Diagnosed Condition</h3>\n            {{ rows | json }}\n            <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n                <ngx-datatable\n                    #mydatatable\n                    class=\"bootstrap\"\n                    (select)=\"onSelect($event)\"\n                    [selectionType]=\"'single'\"\n                    [selectCheck]=\"checkSelectedRow\"\n                    [selected]=\"selected\"\n                    [columnMode]=\"'force'\"\n                    [rowClass]=\"getRowClass\"\n                    [rowHeight]=\"35\"\n                    [rows]=\"ee1Form.get('conditions').controls\"\n                    [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n                >\n                <ngx-datatable-column name=\"Condition Type\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                    <select\n                        *ngIf=\"!row.dummy\"\n                        name=\"conditionType\"\n                        [(ngModel)]=\"row.conditionType\"\n                        class=\"form-control tableCell-align\">\n                      <option value=\"\">Select Condition Type</option>\n                      <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                    </select>\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Condition\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                    <input \n                        *ngIf=\"!row.dummy\"\n                        type=\"text\" \n                        class=\"form-control tableCell-align\"\n                        [(ngModel)]=\"condition\"\n                        name=\"condition\"\n                        >\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Date of Diagnosis\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                      <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                          <date-picker \n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              class=\"tableCell-align\"\n                              style=\"width: 100%;\"\n                              ></date-picker>\n                      </div>\n                  </ng-template>\n                </ngx-datatable-column>\n              </ngx-datatable>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n\n   \n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\" (click)=\"submitForm()\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</div>\n  \n\n    \n\n"
+module.exports = "<div class=\"container\">\n    <form [formGroup]=\"ee1Form\" (ngSubmit)=\"onSubmit()\">\n        <input \n          type=\"text\" \n          class=\"form-control\" \n          placeholder=\"Search for user to chat\"\n          name=\"searchUser\"\n          [disabled]=\"ee1Form.get('testCheckbox').value\"\n          formControlName=\"searchUser\"\n          >\n          <span \n            class=\"warning-block\"\n            *ngIf=\"!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched\">Please enter a username</span>\n     {{ee1Form.value|json}}\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate\" \n                  [require]=\"true\" \n                  [future]=\"false\"\n                  formControlName=\"testDatepicker\">\n                </date-picker>\n            </div>  \n        </div>\n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group ml-3 mt-3\">\n                <label for=\"\">Datepicker</label>\n                <date-picker \n                  [(dates)]=\"testDate2\" \n                  [require]=\"true\" \n                  [future]=\"false\"\n                  formControlName=\"testDatepicker2\"\n                  >\n                </date-picker>\n              </div>\n        </div>\n\n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3\">\n                <checkbox \n                  [size]=\"'sm'\" \n                  [label]=\"'No Medical Condition'\" \n                  [position]=\"'right'\" \n                  [(check)]=\"noMedicalConditionFlag\" \n                  (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"\n                  formControlName=\"testCheckbox\">\n                </checkbox>\n            </div>\n        </div>\n        <div class=\"card bg-light mt-3\">\n            <div class=\"form-group mt-3 ml-3\">\n                <btn-radio \n                  [btnItem]=\"address\" \n                  [(selectedBtn)]=\"addressSelection\" \n                  (selectedBtnChange)=\"addressChange($event)\"\n                  formControlName=\"testBtnGroup\"></btn-radio>\n            </div>\n        </div>\n\n        <!-- Success -->\n        <!-- <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group m-3\" formArrayName=\"conditions\" style=\"height: 500px; overflow: auto;\">\n                <table class=\"table table-striped table-bordered\">\n                  <thead>\n                      <tr>\n                          <th>Active</th>\n                          <th>Condtion Type</th>\n                          <th>Condition</th>\n                          <th>Date Of Diagnosis</th>\n                      </tr>\n                  </thead>\n                  <tbody>\n                      <tr *ngFor=\"let row of ee1Form.get('conditions').controls; let i = index;\" \n                          (click)=\"selectRow(i)\" \n                          [ngClass]=\"{ activeRow: ee1Form.get('conditions').controls[i].value.active }\"\n                          >\n                          <td>{{ row.value | json }}</td>\n                          <td [formGroupName]=\"i\">\n                              <select\n                                  *ngIf=\"!row.value.dummy\"\n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"conditionType\">\n                                <option value=\"\">Select Condition Type</option>\n                                <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                              </select>\n                          </td>\n                          <td [formGroupName]=\"i\">\n                              <input \n                                  *ngIf=\"!row.value.dummy\"\n                                  type=\"text\" \n                                  class=\"form-control tableCell-align\"\n                                  formControlName=\"condition\"\n                                  name=\"condition\"\n                              >\n                          </td>\n                          <td [formGroupName]=\"i\">\n                            <date-picker\n                              *ngIf=\"!row.value.dummy\"\n                              formControlName=\"dateOfDiagnosis\"\n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              style=\"width: 100%;\"\n                            ></date-picker>\n                          </td>\n                      </tr>\n                  </tbody>\n                </table>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div> -->\n{{ ee1Form.value | json }}\n        <dbl-datepicker \n            formControlName=\"testDblDatepicker\"\n            [test1]=\"ee1Form.get('testDblDatepicker').value.value\"\n            ></dbl-datepicker> \n        \n\n        <div class=\"card bg-light mt-3\">\n            <div class=\"row form-group\">\n              <div class=\"col-md-3 ml-auto mt-3\">\n                  <button class=\"btn btn-primary\" type=\"submit\">Submit Form</button>\n                  <button class=\"btn btn-default\" type=\"reset\">reset</button>\n              </div>\n            </div>\n        </div>\n    </form>  \n\n   \n    <!-- To be continue -->\n        <div class=\"card bg-light mt-3\">\n            <h3>Diagnosed Condition</h3>\n            {{ rows | json }}\n            <div class=\"mb-3 mt-3\" style=\"z-index: 1;\">\n                <ngx-datatable\n                    #mydatatable\n                    class=\"bootstrap\"\n                    (select)=\"onSelect($event)\"\n                    [selectionType]=\"'single'\"\n                    [selectCheck]=\"checkSelectedRow\"\n                    [selected]=\"selected\"\n                    [columnMode]=\"'force'\"\n                    [rowClass]=\"getRowClass\"\n                    [rowHeight]=\"35\"\n                    [rows]=\"ee1Form.get('conditions').controls\"\n                    [messages]=\"{'emptyMessage': 'Please add conditions'}\"\n                >\n                <ngx-datatable-column name=\"Condition Type\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-value=\"value\" let-row=\"row\">\n                    <select\n                        *ngIf=\"!row.dummy\"\n                        name=\"conditionType\"\n                        [(ngModel)]=\"row.conditionType\"\n                        class=\"form-control tableCell-align\">\n                      <option value=\"\">Select Condition Type</option>\n                      <option [ngValue]=\"row.conditionType\">{{ row.conditionType }}</option>\n                    </select>\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Condition\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                    <input \n                        *ngIf=\"!row.dummy\"\n                        type=\"text\" \n                        class=\"form-control tableCell-align\"\n                        [(ngModel)]=\"condition\"\n                        name=\"condition\"\n                        >\n                  </ng-template>\n                </ngx-datatable-column>\n                <ngx-datatable-column name=\"Date of Diagnosis\">\n                  <ng-template ngx-datatable-cell-template let-rowIndex=\"rowIndex\" let-row=\"row\" let-value=\"value\">\n                      <div class=\"form-inline\" *ngIf=\"!row.dummy\">\n                          <date-picker \n                              [(dates)]=\"row.dateOfDiagnosis\" \n                              [require]=\"'false'\" \n                              [future]=\"true\"\n                              [customClass]=\"'dpFullWidth'\"\n                              class=\"tableCell-align\"\n                              style=\"width: 100%;\"\n                              ></date-picker>\n                      </div>\n                  </ng-template>\n                </ngx-datatable-column>\n              </ngx-datatable>\n            </div>\n            <div class=\"row form-group mx-0\">\n                <div class=\"col-md-3 mt-2\">\n                  <checkbox [size]=\"'sm'\" [label]=\"'No Medical Condition'\" [position]=\"'right'\" [(check)]=\"noMedicalConditionFlag\" (checkChange)=\"noMedicalCondition(noMedicalConditionFlag)\"></checkbox>\n                </div>\n                <div class=\"col-md-4 offset-md-5\">\n                  <button \n                    class=\"btn btn-primary\" \n                    (click)=\"addRow()\" \n                    type=\"button\">\n                    Add Condition\n                  </button>\n                  <button \n                    class=\"btn btn-secondary\" \n                    (click)=\"removeRow()\" \n                    type=\"button\">\n                    Remove Condition\n                  </button>\n                </div>\n            </div>\n        </div>\n\n   \n\n    <div class=\"card bg-light mt-3\">\n      <div class=\"row form-group\">\n        <div class=\"col-md-2 ml-auto mt-3\">\n            <button class=\"btn btn-primary\" type=\"submit\" [disabled]=\"!ee1Form.valid\" (click)=\"submitForm()\">Submit</button>\n            <button class=\"btn btn-default\" type=\"reset\">reset</button>\n        </div>\n      </div>\n    </div>\n\n    <pre>{{ ee1Form.value | json }}</pre>\n</div>\n  \n\n    \n\n"
 
 /***/ }),
 
@@ -566,6 +569,7 @@ var PlaygroundComponent = /** @class */ (function () {
             'testDatepicker2': [null, __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__shared_date_picker_date_picker_validators__["a" /* DatepickerValidator */])(true, new Date())],
             'testCheckbox': [null, null],
             'testBtnGroup': [this.address[0].value, false],
+            'testDblDatepicker': [{ value: { test1: 'test1', 'disabled': true } }],
             'conditions': this.fb.array([])
         });
         this.initConditions();
@@ -723,6 +727,9 @@ var PlaygroundComponent = /** @class */ (function () {
     PlaygroundComponent.prototype.addressChange = function () {
     };
     PlaygroundComponent.prototype.submitForm = function () {
+        console.log(this.ee1Form);
+    };
+    PlaygroundComponent.prototype.onSubmit = function () {
         console.log(this.ee1Form);
     };
     __decorate([
@@ -1352,6 +1359,119 @@ var NgbDateFRParserFormatter = /** @class */ (function (_super) {
 }(__WEBPACK_IMPORTED_MODULE_1__ng_bootstrap_ng_bootstrap__["b" /* NgbDateParserFormatter */]));
 
 //# sourceMappingURL=ngb-date-fr-parser-formatter.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<input type=\"text\" [(ngModel)]=\"test1.test1\" class=\"form-control\">\n<input type=\"text\" [(ngModel)]=\"test1.test1\" class=\"form-control\">\n<input type=\"text\" [(ngModel)]=\"test1.test1\" class=\"form-control\">\n{{ test1 | json }}"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DblDatepickerComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var DblDatepickerComponent = /** @class */ (function () {
+    function DblDatepickerComponent() {
+        /** Implement ControlValueAccessor method below */
+        this.propagateChange = function (_) { };
+    }
+    DblDatepickerComponent_1 = DblDatepickerComponent;
+    DblDatepickerComponent.prototype.ngOnInit = function () {
+    };
+    DblDatepickerComponent.prototype.test1Change = function (event) {
+        console.log(event);
+        this.propagateChange(event);
+    };
+    /** writeValue(obj: any) is the method that writes a new value from the form model into the view or (if needed) DOM property. */
+    DblDatepickerComponent.prototype.writeValue = function (value) {
+        console.log(value);
+    };
+    /**
+     * registerOnChange(fn: any) is a method that registers a handler that should be called when something in the view has changed.
+     * It gets a function that tells other form directives and form controls to update their values.
+     * registerOnChange() has access to a function that informs the outside world about changes.
+     * Here’s where we can do special work, whenever we propagate the change, if we wanted to.
+     */
+    DblDatepickerComponent.prototype.registerOnChange = function (fn) {
+        this.propagateChange = fn;
+    };
+    /**
+     * registerOnTouched(fn: any) Similiar to registerOnChange(), this registers a handler specifically for when a control receives
+     * a touch event.
+     * */
+    DblDatepickerComponent.prototype.registerOnTouched = function (fn) {
+    };
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], DblDatepickerComponent.prototype, "test1", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], DblDatepickerComponent.prototype, "test2", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], DblDatepickerComponent.prototype, "test3", void 0);
+    __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Object)
+    ], DblDatepickerComponent.prototype, "test4", void 0);
+    DblDatepickerComponent = DblDatepickerComponent_1 = __decorate([
+        __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'dbl-datepicker',
+            template: __webpack_require__("../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.html"),
+            styles: [__webpack_require__("../../../../../src/app/components/shared/dbl-datepicker/dbl-datepicker.component.css")],
+            providers: [
+                {
+                    provide: __WEBPACK_IMPORTED_MODULE_1__angular_forms__["c" /* NG_VALUE_ACCESSOR */],
+                    useExisting: __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["forwardRef"])(function () { return DblDatepickerComponent_1; }),
+                    multi: true
+                }
+            ]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DblDatepickerComponent);
+    return DblDatepickerComponent;
+    var DblDatepickerComponent_1;
+}());
+
+//# sourceMappingURL=dbl-datepicker.component.js.map
 
 /***/ }),
 

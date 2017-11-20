@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="ee1Form">
+    <form [formGroup]="ee1Form" (ngSubmit)="onSubmit()">
         <input 
           type="text" 
           class="form-control" 
@@ -11,7 +11,7 @@
           <span 
             class="warning-block"
             *ngIf="!ee1Form.get('searchUser').valid && ee1Form.get('searchUser').touched">Please enter a username</span>
-    
+     {{ee1Form.value|json}}
         <div class="card bg-light mt-3">
             <div class="form-group ml-3 mt-3">
                 <label for="">Datepicker</label>
@@ -19,10 +19,9 @@
                   [(dates)]="testDate" 
                   [require]="true" 
                   [future]="false"
-                  formControlName="testDatepicker"
-                  >
+                  formControlName="testDatepicker">
                 </date-picker>
-              </div>
+            </div>  
         </div>
 
         <div class="card bg-light mt-3">
@@ -132,13 +131,17 @@
                 </div>
             </div>
         </div> -->
-
+{{ ee1Form.value | json }}
+        <dbl-datepicker 
+            formControlName="testDblDatepicker"
+            [test1]="ee1Form.get('testDblDatepicker').value.value"
+            ></dbl-datepicker> 
         
 
         <div class="card bg-light mt-3">
             <div class="row form-group">
               <div class="col-md-3 ml-auto mt-3">
-                  <button class="btn btn-primary" type="submit" [disabled]="!ee1Form.valid">Submit Form</button>
+                  <button class="btn btn-primary" type="submit">Submit Form</button>
                   <button class="btn btn-default" type="reset">reset</button>
               </div>
             </div>

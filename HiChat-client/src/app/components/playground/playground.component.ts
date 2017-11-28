@@ -44,7 +44,6 @@ export class PlaygroundComponent implements OnInit {
       'testDatepicker2': [null, DatepickerValidator(true, new Date())],
       'testCheckbox': [null, null],
       'testBtnGroup': [this.address[0].value, false],
-      'testDblDatepicker': [{ value: { test1: 'test1', 'disabled': true }}],
       'conditions': this.fb.array([])
     });
     this.initConditions();
